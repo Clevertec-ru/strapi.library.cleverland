@@ -7,13 +7,19 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "prepare": "husky install"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.2"
+  },
   "dependencies": {
-    "@strapi/strapi": "4.4.3",
-    "@strapi/plugin-users-permissions": "4.4.3",
     "@strapi/plugin-i18n": "4.4.3",
+    "@strapi/plugin-users-permissions": "4.4.3",
+    "@strapi/strapi": "4.4.3",
     "better-sqlite3": "7.4.6"
   },
   "author": {
@@ -26,5 +32,8 @@
     "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": []
+  }
 }
