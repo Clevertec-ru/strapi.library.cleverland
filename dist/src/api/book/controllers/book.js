@@ -28,28 +28,29 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
     async findOne(ctx) {
         var _a;
         ctx.query = { ...ctx.query, populate: "*" };
-        const { data } = await super.findOne(ctx);
+        const { data: { id, attributes: { title, rating, issueYear, description, publish, pages, cover, weight, format, ISBN, producer, authors, images, categories, }, }, } = await super.findOne(ctx);
         const book = {
-            id: data.id,
-            title: data.attributes.title,
-            rating: data.attributes.rating,
-            issueYear: data.attributes.issueYear,
-            description: data.attributes.description,
-            publish: data.attributes.publish,
-            pages: data.attributes.pages,
-            cover: data.attributes.cover,
-            weight: data.attributes.weight,
-            format: data.attributes.format,
-            ISBN: data.attributes.ISBN,
-            producer: data.attributes.producer,
-            authors: data.attributes.authors.data.length
-                ? data.attributes.authors.data.map(({ attributes }) => attributes.name)
+            id,
+            title,
+            rating,
+            issueYear,
+            description,
+            publish,
+            pages,
+            cover,
+            weight,
+            format,
+            ISBN,
+            producer,
+            authors: authors.data.length
+                ? authors.data.map(({ attributes }) => attributes.name)
                 : null,
-            images: ((_a = data.attributes.images.data) === null || _a === void 0 ? void 0 : _a.map(({ attributes }) => ({
+            images: ((_a = images.data) === null || _a === void 0 ? void 0 : _a.map(({ attributes }) => ({
                 url: attributes.url,
             }))) || null,
-            categories: data.attributes.categories.data.length
-                ? data.attributes.categories.data.map(({ attributes }) => attributes.name)
+            categories: categories.data.length
+                ? categories.data.map(({ attributes }) => attributes.name)
+
                 : null,
         };
         return book;

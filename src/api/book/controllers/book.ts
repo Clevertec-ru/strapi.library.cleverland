@@ -41,33 +41,49 @@ export default factories.createCoreController(
 
     async findOne(ctx) {
       ctx.query = { ...ctx.query, populate: "*" };
-      const { data }: BookDataResponseType = await super.findOne(ctx);
+      const {
+        data: {
+          id,
+          attributes: {
+            title,
+            rating,
+            issueYear,
+            description,
+            publish,
+            pages,
+            cover,
+            weight,
+            format,
+            ISBN,
+            producer,
+            authors,
+            images,
+            categories,
+          },
+        },
+      }: BookDataResponseType = await super.findOne(ctx);
       const book = {
-        id: data.id,
-        title: data.attributes.title,
-        rating: data.attributes.rating,
-        issueYear: data.attributes.issueYear,
-        description: data.attributes.description,
-        publish: data.attributes.publish,
-        pages: data.attributes.pages,
-        cover: data.attributes.cover,
-        weight: data.attributes.weight,
-        format: data.attributes.format,
-        ISBN: data.attributes.ISBN,
-        producer: data.attributes.producer,
-        authors: data.attributes.authors.data.length
-          ? data.attributes.authors.data.map(
-              ({ attributes }) => attributes.name
-            )
+        id,
+        title,
+        rating,
+        issueYear,
+        description,
+        publish,
+        pages,
+        cover,
+        weight,
+        format,
+        ISBN,
+        producer,
+        authors: authors.data.length
+          ? authors.data.map(({ attributes }) => attributes.name)
           : null,
         images:
-          data.attributes.images.data?.map(({ attributes }) => ({
+          images.data?.map(({ attributes }) => ({
             url: attributes.url,
           })) || null,
-        categories: data.attributes.categories.data.length
-          ? data.attributes.categories.data.map(
-              ({ attributes }) => attributes.name
-            )
+        categories: categories.data.length
+          ? categories.data.map(({ attributes }) => attributes.name)
           : null,
       };
 
