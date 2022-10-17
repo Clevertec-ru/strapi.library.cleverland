@@ -50,6 +50,27 @@
     "description": {
       "type": "text",
       "unique": false
+    },
+    "publish": {
+      "type": "string"
+    },
+    "pages": {
+      "type": "biginteger"
+    },
+    "cover": {
+      "type": "string"
+    },
+    "format": {
+      "type": "string"
+    },
+    "weight": {
+      "type": "string"
+    },
+    "ISBN": {
+      "type": "string"
+    },
+    "producer": {
+      "type": "text"
     }
   }
 }

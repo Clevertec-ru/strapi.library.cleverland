@@ -1,31 +1,34 @@
 import { CategoryDataType } from "./categories";
 
-export type BookType = {
-  issueYear: string;
-  rating: number;
-  title: string;
-  id: number;
-  authors: string[] | null;
-  images: { url: string }[] | null;
-  categories: string[] | null;
+export type BooksDataResponseType = {
+  data: BookDataType[];
 };
 
-export type BookDataType = {
-  data: {
-    id: number;
-    attributes: {
-      title: string;
-      rating: number;
-      issueYear: string;
-      createdAt: Date;
-      updatedAt: Date;
-      publishedAt: Date;
-      description: string | null;
-      authors: AuthorType;
-      images: ImageType;
-      categories: CategoryDataType;
-    };
-  }[];
+export type BookDataResponseType = {
+  data: BookDataType;
+};
+
+type BookDataType = {
+  id: number;
+  attributes: {
+    title: string;
+    rating: number;
+    issueYear: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+    description: string | null;
+    publish: string | null;
+    cover: string | null;
+    weight: string | null;
+    pages: string | null;
+    format: string | null;
+    ISBN: string | null;
+    producer: string | null;
+    authors: AuthorType;
+    images: ImageType;
+    categories: CategoryDataType;
+  };
 };
 
 type ImageType = {

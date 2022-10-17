@@ -25,4 +25,33 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
         });
         return books;
     },
+    async findOne(ctx) {
+        var _a;
+        ctx.query = { ...ctx.query, populate: "*" };
+        const { data: { id, attributes: { title, rating, issueYear, description, publish, pages, cover, weight, format, ISBN, producer, authors, images, categories, }, }, } = await super.findOne(ctx);
+        const book = {
+            id,
+            title,
+            rating,
+            issueYear,
+            description,
+            publish,
+            pages,
+            cover,
+            weight,
+            format,
+            ISBN,
+            producer,
+            authors: authors.data.length
+                ? authors.data.map(({ attributes }) => attributes.name)
+                : null,
+            images: ((_a = images.data) === null || _a === void 0 ? void 0 : _a.map(({ attributes }) => ({
+                url: attributes.url,
+            }))) || null,
+            categories: categories.data.length
+                ? categories.data.map(({ attributes }) => attributes.name)
+                : null,
+        };
+        return book;
+    },
 }));
