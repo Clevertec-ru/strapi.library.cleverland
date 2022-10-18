@@ -50,7 +50,6 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
             }))) || null,
             categories: categories.data.length
                 ? categories.data.map(({ attributes }) => attributes.name)
-
                 : null,
         };
         return book;
