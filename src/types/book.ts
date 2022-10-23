@@ -28,6 +28,7 @@ type BookDataType = {
     authors: AuthorType;
     images: ImageType;
     categories: CategoryDataType;
+    comments: any;
   };
 };
 
