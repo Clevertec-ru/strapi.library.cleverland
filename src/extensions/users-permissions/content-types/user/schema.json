@@ -88,6 +88,12 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "bookings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::booking.booking",
+      "mappedBy": "user"
     }
   }
 }

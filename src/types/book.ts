@@ -29,6 +29,7 @@ type BookDataType = {
     images: ImageType;
     categories: CategoryDataType;
     comments: any;
+    booking: any;
   };
 };
 

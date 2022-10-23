@@ -74,6 +74,12 @@
       "relation": "oneToMany",
       "target": "api::comment.comment",
       "mappedBy": "book"
+    },
+    "booking": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::booking.booking",
+      "mappedBy": "book"
     }
   }
 }
