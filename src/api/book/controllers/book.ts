@@ -23,13 +23,11 @@ export default factories.createCoreController(
           issueYear,
           rating,
           title,
-          authors: authors.data.length
-            ? authors.data.map(({ attributes }) => attributes.name)
-            : null,
-          images:
+          authors,
+          image:
             images.data?.map(({ attributes }) => ({
               url: attributes.url,
-            })) || null,
+            }))[0] || null,
           categories: categories.data.length
             ? categories.data.map(({ attributes }) => attributes.name)
             : null,
@@ -40,7 +38,7 @@ export default factories.createCoreController(
     },
 
     async findOne(ctx) {
-      ctx.query = { ...ctx.query, populate: "*" };
+      ctx.query = { ...ctx.query, populate: "deep" };
       const {
         data: {
           id,
@@ -59,6 +57,7 @@ export default factories.createCoreController(
             authors,
             images,
             categories,
+            comments,
           },
         },
       }: BookDataResponseType = await super.findOne(ctx);
@@ -75,15 +74,30 @@ export default factories.createCoreController(
         format,
         ISBN,
         producer,
-        authors: authors.data.length
-          ? authors.data.map(({ attributes }) => attributes.name)
-          : null,
+        authors,
         images:
           images.data?.map(({ attributes }) => ({
             url: attributes.url,
           })) || null,
-        categories: categories.data.length
+        categories: categories?.data.length
           ? categories.data.map(({ attributes }) => attributes.name)
+          : null,
+        comments: comments?.data.length
+          ? comments.data?.map(
+              ({ id, attributes: { rating, text, createdAt, user } }) => ({
+                id,
+                rating,
+                text,
+                createdAt,
+                user: {
+                  firstName: user.data.attributes.firstName,
+                  lastName: user.data.attributes.lastName,
+                  avatarUrl:
+                    user.data.attributes.avatar.data?.attributes.formats
+                      .thumbnail.url || null,
+                },
+              })
+            )
           : null,
       };
 

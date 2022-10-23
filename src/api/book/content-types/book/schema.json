@@ -35,12 +35,6 @@
         "images"
       ]
     },
-    "authors": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::author.author",
-      "inversedBy": "books"
-    },
     "categories": {
       "type": "relation",
       "relation": "manyToMany",
@@ -63,14 +57,23 @@
     "format": {
       "type": "string"
     },
-    "weight": {
-      "type": "string"
-    },
     "ISBN": {
       "type": "string"
     },
     "producer": {
       "type": "text"
+    },
+    "weight": {
+      "type": "biginteger"
+    },
+    "authors": {
+      "type": "json"
+    },
+    "comments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::comment.comment",
+      "mappedBy": "book"
     }
   }
 }
