@@ -26,6 +26,7 @@ export default factories.createCoreController(
               images,
               categories,
               booking,
+              delivery,
             },
             id,
           }) => ({
@@ -44,8 +45,15 @@ export default factories.createCoreController(
             booking: {
               id: booking.data?.id || null,
               order: booking.data?.attributes.order || false,
-              dateOrderFrom: booking.data?.attributes.dateOrderFrom || null,
-              userId: booking.data?.attributes.user.data.id || null,
+              dateOrder: booking.data?.attributes.dateOrder || null,
+              customerId: booking.data?.attributes.customer.data?.id || null,
+            },
+            delivery: {
+              id: delivery.data?.id || null,
+              handed: delivery.data?.attributes.handed || false,
+              dateHandedFrom: delivery.data?.attributes.dateHandedFrom || null,
+              dateHandedTo: delivery.data?.attributes.dateHandedTo || null,
+              carrierId: delivery.data?.attributes.carrier.data?.id || null,
             },
           })
         ) || [];
@@ -76,6 +84,7 @@ export default factories.createCoreController(
             categories,
             comments,
             booking,
+            delivery,
           },
         },
       } = response;
@@ -121,8 +130,15 @@ export default factories.createCoreController(
         booking: {
           id: booking.data?.id || null,
           order: booking.data?.attributes.order || false,
-          dateOrderFrom: booking.data?.attributes.dateOrderFrom || null,
-          bookingUserId: booking.data?.attributes.user.data.id || null,
+          dateOrder: booking.data?.attributes.dateOrder || null,
+          customerId: booking.data?.attributes.customer.data?.id || null,
+        },
+        delivery: {
+          id: delivery.data?.id || null,
+          handed: delivery.data?.attributes.handed || false,
+          dateHandedFrom: delivery.data?.attributes.dateHandedFrom || null,
+          dateHandedTo: delivery.data?.attributes.dateHandedTo || null,
+          carrierId: delivery.data?.attributes.carrier.data?.id || null,
         },
       };
 

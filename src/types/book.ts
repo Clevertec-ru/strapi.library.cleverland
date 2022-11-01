@@ -30,6 +30,7 @@ type BookDataType = {
     categories: CategoryDataType;
     comments: any;
     booking: any;
+    delivery: any;
   };
 };
 

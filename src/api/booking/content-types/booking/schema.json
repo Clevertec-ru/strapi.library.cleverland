@@ -17,8 +17,9 @@
       "default": false,
       "required": true
     },
-    "dateOrderFrom": {
-      "type": "datetime"
+    "dateOrder": {
+      "type": "datetime",
+      "required": true
     },
     "book": {
       "type": "relation",
@@ -26,7 +27,7 @@
       "target": "api::book.book",
       "inversedBy": "booking"
     },
-    "user": {
+    "customer": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
