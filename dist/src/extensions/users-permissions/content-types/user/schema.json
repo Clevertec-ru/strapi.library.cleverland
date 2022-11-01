@@ -89,11 +89,17 @@
                 "images"
             ]
         },
-        "bookings": {
+        "booking": {
             "type": "relation",
-            "relation": "oneToMany",
+            "relation": "oneToOne",
             "target": "api::booking.booking",
-            "mappedBy": "user"
+            "inversedBy": "customer"
+        },
+        "delivery": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::delivery.delivery",
+            "inversedBy": "carrier"
         }
     }
 }

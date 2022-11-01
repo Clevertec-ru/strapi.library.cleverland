@@ -5,8 +5,8 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
     async find(ctx) {
         ctx.query = { ...ctx.query, populate: "deep" };
         const { data } = await super.find(ctx);
-        const books = data.map(({ attributes: { issueYear, rating, title, authors, images, categories, booking, }, id, }) => {
-            var _a, _b, _c, _d, _e;
+        const books = data.map(({ attributes: { issueYear, rating, title, authors, images, categories, booking, delivery, }, id, }) => {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
             return ({
                 issueYear,
                 rating,
@@ -22,20 +22,27 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
                 booking: {
                     id: ((_b = booking.data) === null || _b === void 0 ? void 0 : _b.id) || null,
                     order: ((_c = booking.data) === null || _c === void 0 ? void 0 : _c.attributes.order) || false,
-                    dateOrderFrom: ((_d = booking.data) === null || _d === void 0 ? void 0 : _d.attributes.dateOrderFrom) || null,
-                    userId: ((_e = booking.data) === null || _e === void 0 ? void 0 : _e.attributes.user.data.id) || null,
+                    dateOrder: ((_d = booking.data) === null || _d === void 0 ? void 0 : _d.attributes.dateOrder) || null,
+                    customerId: ((_f = (_e = booking.data) === null || _e === void 0 ? void 0 : _e.attributes.customer.data) === null || _f === void 0 ? void 0 : _f.id) || null,
+                },
+                delivery: {
+                    id: ((_g = delivery.data) === null || _g === void 0 ? void 0 : _g.id) || null,
+                    handed: ((_h = delivery.data) === null || _h === void 0 ? void 0 : _h.attributes.handed) || false,
+                    dateHandedFrom: ((_j = delivery.data) === null || _j === void 0 ? void 0 : _j.attributes.dateHandedFrom) || null,
+                    dateHandedTo: ((_k = delivery.data) === null || _k === void 0 ? void 0 : _k.attributes.dateHandedTo) || null,
+                    carrierId: ((_m = (_l = delivery.data) === null || _l === void 0 ? void 0 : _l.attributes.carrier.data) === null || _m === void 0 ? void 0 : _m.id) || null,
                 },
             });
         }) || [];
         return books;
     },
     async findOne(ctx) {
-        var _a, _b, _c, _d, _e, _f;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
         ctx.query = { ...ctx.query, populate: "deep" };
         const response = await super.findOne(ctx);
         if (!response)
             return Error("Not found");
-        const { data: { id, attributes: { title, rating, issueYear, description, publish, pages, cover, weight, format, ISBN, producer, authors, images, categories, comments, booking, }, }, } = response;
+        const { data: { id, attributes: { title, rating, issueYear, description, publish, pages, cover, weight, format, ISBN, producer, authors, images, categories, comments, booking, delivery, }, }, } = response;
         const book = {
             id,
             title,
@@ -76,8 +83,15 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
             booking: {
                 id: ((_c = booking.data) === null || _c === void 0 ? void 0 : _c.id) || null,
                 order: ((_d = booking.data) === null || _d === void 0 ? void 0 : _d.attributes.order) || false,
-                dateOrderFrom: ((_e = booking.data) === null || _e === void 0 ? void 0 : _e.attributes.dateOrderFrom) || null,
-                bookingUserId: ((_f = booking.data) === null || _f === void 0 ? void 0 : _f.attributes.user.data.id) || null,
+                dateOrder: ((_e = booking.data) === null || _e === void 0 ? void 0 : _e.attributes.dateOrder) || null,
+                customerId: ((_g = (_f = booking.data) === null || _f === void 0 ? void 0 : _f.attributes.customer.data) === null || _g === void 0 ? void 0 : _g.id) || null,
+            },
+            delivery: {
+                id: ((_h = delivery.data) === null || _h === void 0 ? void 0 : _h.id) || null,
+                handed: ((_j = delivery.data) === null || _j === void 0 ? void 0 : _j.attributes.handed) || false,
+                dateHandedFrom: ((_k = delivery.data) === null || _k === void 0 ? void 0 : _k.attributes.dateHandedFrom) || null,
+                dateHandedTo: ((_l = delivery.data) === null || _l === void 0 ? void 0 : _l.attributes.dateHandedTo) || null,
+                carrierId: ((_o = (_m = delivery.data) === null || _m === void 0 ? void 0 : _m.attributes.carrier.data) === null || _o === void 0 ? void 0 : _o.id) || null,
             },
         };
         return book;
