@@ -1,0 +1,27 @@
+{
+    "kind": "collectionType",
+    "collectionName": "histories",
+    "info": {
+        "singularName": "history",
+        "pluralName": "histories",
+        "displayName": "history"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "books": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::book.book",
+            "mappedBy": "history"
+        },
+        "user": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "plugin::users-permissions.user",
+            "inversedBy": "history"
+        }
+    }
+}

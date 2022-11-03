@@ -31,6 +31,7 @@ type BookDataType = {
     comments: any;
     booking: any;
     delivery: any;
+    history: any;
   };
 };
 

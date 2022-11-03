@@ -24,6 +24,7 @@ export default (plugin) => {
       avatar,
       booking,
       delivery,
+      history,
     } = response;
     const user = {
       id,
@@ -87,6 +88,24 @@ export default (plugin) => {
             }
           : null,
       },
+      history: {
+        id: history?.id || null,
+        books: history?.books?.length
+          ? history.books.map(
+              ({ id, title, rating, issueYear, authors, images }) => ({
+                id,
+                title,
+                rating,
+                issueYear,
+                authors,
+                image:
+                  images?.data?.map(({ attributes }) => ({
+                    url: attributes.url,
+                  }))[0] || null,
+              })
+            )
+          : null,
+      },
     };
     return user;
   };
@@ -117,6 +136,7 @@ export default (plugin) => {
         avatar,
         booking,
         delivery,
+        history,
       } = response;
       const user = {
         id,
@@ -180,6 +200,24 @@ export default (plugin) => {
               }
             : null,
         },
+        history: {
+          id: history?.id || null,
+          books: history?.books?.length
+            ? history.books.map(
+                ({ id, title, rating, issueYear, authors, images }) => ({
+                  id,
+                  title,
+                  rating,
+                  issueYear,
+                  authors,
+                  image:
+                    images?.data?.map(({ attributes }) => ({
+                      url: attributes.url,
+                    }))[0] || null,
+                })
+              )
+            : null,
+        },
       };
       return user;
     } else {
@@ -193,7 +231,7 @@ export default (plugin) => {
       const response = await strapi.entityService.update(
         "plugin::users-permissions.user",
         ctx.params.id,
-        { 
+        {
           data: ctx.request.body,
           populate: "deep",
         }
@@ -214,6 +252,7 @@ export default (plugin) => {
         avatar,
         booking,
         delivery,
+        history,
       } = response;
       const user = {
         id,
@@ -275,6 +314,24 @@ export default (plugin) => {
                     url: attributes.url,
                   }))[0] || null,
               }
+            : null,
+        },
+        history: {
+          id: history?.id || null,
+          books: history?.books?.length
+            ? history.books.map(
+                ({ id, title, rating, issueYear, authors, images }) => ({
+                  id,
+                  title,
+                  rating,
+                  issueYear,
+                  authors,
+                  image:
+                    images?.data?.map(({ attributes }) => ({
+                      url: attributes.url,
+                    }))[0] || null,
+                })
+              )
             : null,
         },
       };

@@ -27,6 +27,7 @@ export default factories.createCoreController(
               categories,
               booking,
               delivery,
+              history,
             },
             id,
           }) => ({
@@ -54,6 +55,10 @@ export default factories.createCoreController(
               dateHandedFrom: delivery.data?.attributes.dateHandedFrom || null,
               dateHandedTo: delivery.data?.attributes.dateHandedTo || null,
               recipientId: delivery.data?.attributes.recipient.data?.id || null,
+            },
+            history: {
+              id: history.data?.id || null,
+              userId: history.data?.attributes.user.data?.id || null,
             },
           })
         ) || [];
@@ -85,6 +90,7 @@ export default factories.createCoreController(
             comments,
             booking,
             delivery,
+            history,
           },
         },
       } = response;
@@ -139,6 +145,10 @@ export default factories.createCoreController(
           dateHandedFrom: delivery.data?.attributes.dateHandedFrom || null,
           dateHandedTo: delivery.data?.attributes.dateHandedTo || null,
           recipientId: delivery.data?.attributes.recipient.data?.id || null,
+        },
+        history: {
+          id: history.data?.id || null,
+          userId: history.data?.attributes.user.data?.id || null,
         },
       };
 

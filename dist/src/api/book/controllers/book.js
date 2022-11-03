@@ -5,8 +5,8 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
     async find(ctx) {
         ctx.query = { ...ctx.query, populate: "deep" };
         const { data } = await super.find(ctx);
-        const books = data.map(({ attributes: { issueYear, rating, title, authors, images, categories, booking, delivery, }, id, }) => {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+        const books = data.map(({ attributes: { issueYear, rating, title, authors, images, categories, booking, delivery, history, }, id, }) => {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
             return ({
                 issueYear,
                 rating,
@@ -32,17 +32,21 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
                     dateHandedTo: ((_k = delivery.data) === null || _k === void 0 ? void 0 : _k.attributes.dateHandedTo) || null,
                     recipientId: ((_m = (_l = delivery.data) === null || _l === void 0 ? void 0 : _l.attributes.recipient.data) === null || _m === void 0 ? void 0 : _m.id) || null,
                 },
+                history: {
+                    id: ((_o = history.data) === null || _o === void 0 ? void 0 : _o.id) || null,
+                    userId: ((_q = (_p = history.data) === null || _p === void 0 ? void 0 : _p.attributes.user.data) === null || _q === void 0 ? void 0 : _q.id) || null,
+                },
             });
         }) || [];
         return books;
     },
     async findOne(ctx) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
         ctx.query = { ...ctx.query, populate: "deep" };
         const response = await super.findOne(ctx);
         if (!response)
             return Error("Not found");
-        const { data: { id, attributes: { title, rating, issueYear, description, publish, pages, cover, weight, format, ISBN, producer, authors, images, categories, comments, booking, delivery, }, }, } = response;
+        const { data: { id, attributes: { title, rating, issueYear, description, publish, pages, cover, weight, format, ISBN, producer, authors, images, categories, comments, booking, delivery, history, }, }, } = response;
         const book = {
             id,
             title,
@@ -92,6 +96,10 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
                 dateHandedFrom: ((_k = delivery.data) === null || _k === void 0 ? void 0 : _k.attributes.dateHandedFrom) || null,
                 dateHandedTo: ((_l = delivery.data) === null || _l === void 0 ? void 0 : _l.attributes.dateHandedTo) || null,
                 recipientId: ((_o = (_m = delivery.data) === null || _m === void 0 ? void 0 : _m.attributes.recipient.data) === null || _o === void 0 ? void 0 : _o.id) || null,
+            },
+            history: {
+                id: ((_p = history.data) === null || _p === void 0 ? void 0 : _p.id) || null,
+                userId: ((_r = (_q = history.data) === null || _q === void 0 ? void 0 : _q.attributes.user.data) === null || _r === void 0 ? void 0 : _r.id) || null,
             },
         };
         return book;

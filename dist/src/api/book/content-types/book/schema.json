@@ -86,6 +86,12 @@
             "relation": "oneToOne",
             "target": "api::delivery.delivery",
             "mappedBy": "book"
+        },
+        "history": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::history.history",
+            "inversedBy": "books"
         }
     }
 }

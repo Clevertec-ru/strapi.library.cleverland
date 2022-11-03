@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = (plugin) => {
     plugin.controllers.user.me = async (ctx) => {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         ctx.query = { ...ctx.query, populate: "deep" };
         const response = await strapi.entityService.findOne("plugin::users-permissions.user", ctx.state.user.id, {
             populate: "deep",
         });
-        const { id, username, email, confirmed, blocked, createdAt, updatedAt, firstName, lastName, phone, role, comments, avatar, booking, delivery, } = response;
+        const { id, username, email, confirmed, blocked, createdAt, updatedAt, firstName, lastName, phone, role, comments, avatar, booking, delivery, history, } = response;
         const user = {
             id,
             username,
@@ -67,17 +67,35 @@ exports.default = (plugin) => {
                     }
                     : null,
             },
+            history: {
+                id: (history === null || history === void 0 ? void 0 : history.id) || null,
+                books: ((_e = history === null || history === void 0 ? void 0 : history.books) === null || _e === void 0 ? void 0 : _e.length)
+                    ? history.books.map(({ id, title, rating, issueYear, authors, images }) => {
+                        var _a;
+                        return ({
+                            id,
+                            title,
+                            rating,
+                            issueYear,
+                            authors,
+                            image: ((_a = images === null || images === void 0 ? void 0 : images.data) === null || _a === void 0 ? void 0 : _a.map(({ attributes }) => ({
+                                url: attributes.url,
+                            }))[0]) || null,
+                        });
+                    })
+                    : null,
+            },
         };
         return user;
     };
     plugin.controllers.user.findOne = async (ctx) => {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         ctx.query = { ...ctx.query, populate: "deep" };
         if (ctx.params.id == ctx.state.user.id) {
             const response = await strapi.entityService.findOne("plugin::users-permissions.user", ctx.params.id, {
                 populate: "deep",
             });
-            const { id, username, email, confirmed, blocked, createdAt, updatedAt, firstName, lastName, phone, role, comments, avatar, booking, delivery, } = response;
+            const { id, username, email, confirmed, blocked, createdAt, updatedAt, firstName, lastName, phone, role, comments, avatar, booking, delivery, history, } = response;
             const user = {
                 id,
                 username,
@@ -135,6 +153,24 @@ exports.default = (plugin) => {
                                 url: attributes.url,
                             }))[0]) || null,
                         }
+                        : null,
+                },
+                history: {
+                    id: (history === null || history === void 0 ? void 0 : history.id) || null,
+                    books: ((_e = history === null || history === void 0 ? void 0 : history.books) === null || _e === void 0 ? void 0 : _e.length)
+                        ? history.books.map(({ id, title, rating, issueYear, authors, images }) => {
+                            var _a;
+                            return ({
+                                id,
+                                title,
+                                rating,
+                                issueYear,
+                                authors,
+                                image: ((_a = images === null || images === void 0 ? void 0 : images.data) === null || _a === void 0 ? void 0 : _a.map(({ attributes }) => ({
+                                    url: attributes.url,
+                                }))[0]) || null,
+                            });
+                        })
                         : null,
                 },
             };
@@ -145,14 +181,14 @@ exports.default = (plugin) => {
         }
     };
     plugin.controllers.user.update = async (ctx) => {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         ctx.query = { ...ctx.query, populate: "deep" };
         if (ctx.params.id == ctx.state.user.id) {
             const response = await strapi.entityService.update("plugin::users-permissions.user", ctx.params.id, {
                 data: ctx.request.body,
                 populate: "deep",
             });
-            const { id, username, email, confirmed, blocked, createdAt, updatedAt, firstName, lastName, phone, role, comments, avatar, booking, delivery, } = response;
+            const { id, username, email, confirmed, blocked, createdAt, updatedAt, firstName, lastName, phone, role, comments, avatar, booking, delivery, history, } = response;
             const user = {
                 id,
                 username,
@@ -210,6 +246,24 @@ exports.default = (plugin) => {
                                 url: attributes.url,
                             }))[0]) || null,
                         }
+                        : null,
+                },
+                history: {
+                    id: (history === null || history === void 0 ? void 0 : history.id) || null,
+                    books: ((_e = history === null || history === void 0 ? void 0 : history.books) === null || _e === void 0 ? void 0 : _e.length)
+                        ? history.books.map(({ id, title, rating, issueYear, authors, images }) => {
+                            var _a;
+                            return ({
+                                id,
+                                title,
+                                rating,
+                                issueYear,
+                                authors,
+                                image: ((_a = images === null || images === void 0 ? void 0 : images.data) === null || _a === void 0 ? void 0 : _a.map(({ attributes }) => ({
+                                    url: attributes.url,
+                                }))[0]) || null,
+                            });
+                        })
                         : null,
                 },
             };
