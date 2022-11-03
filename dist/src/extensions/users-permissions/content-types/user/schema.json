@@ -99,7 +99,7 @@
             "type": "relation",
             "relation": "oneToOne",
             "target": "api::delivery.delivery",
-            "inversedBy": "carrier"
+            "inversedBy": "recipient"
         }
     }
 }

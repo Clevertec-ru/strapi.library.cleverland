@@ -53,7 +53,7 @@ export default factories.createCoreController(
               handed: delivery.data?.attributes.handed || false,
               dateHandedFrom: delivery.data?.attributes.dateHandedFrom || null,
               dateHandedTo: delivery.data?.attributes.dateHandedTo || null,
-              carrierId: delivery.data?.attributes.carrier.data?.id || null,
+              recipientId: delivery.data?.attributes.recipient.data?.id || null,
             },
           })
         ) || [];
@@ -138,7 +138,7 @@ export default factories.createCoreController(
           handed: delivery.data?.attributes.handed || false,
           dateHandedFrom: delivery.data?.attributes.dateHandedFrom || null,
           dateHandedTo: delivery.data?.attributes.dateHandedTo || null,
-          carrierId: delivery.data?.attributes.carrier.data?.id || null,
+          recipientId: delivery.data?.attributes.recipient.data?.id || null,
         },
       };
 
