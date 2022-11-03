@@ -30,7 +30,7 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
                     handed: ((_h = delivery.data) === null || _h === void 0 ? void 0 : _h.attributes.handed) || false,
                     dateHandedFrom: ((_j = delivery.data) === null || _j === void 0 ? void 0 : _j.attributes.dateHandedFrom) || null,
                     dateHandedTo: ((_k = delivery.data) === null || _k === void 0 ? void 0 : _k.attributes.dateHandedTo) || null,
-                    carrierId: ((_m = (_l = delivery.data) === null || _l === void 0 ? void 0 : _l.attributes.carrier.data) === null || _m === void 0 ? void 0 : _m.id) || null,
+                    recipientId: ((_m = (_l = delivery.data) === null || _l === void 0 ? void 0 : _l.attributes.recipient.data) === null || _m === void 0 ? void 0 : _m.id) || null,
                 },
             });
         }) || [];
@@ -91,7 +91,7 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
                 handed: ((_j = delivery.data) === null || _j === void 0 ? void 0 : _j.attributes.handed) || false,
                 dateHandedFrom: ((_k = delivery.data) === null || _k === void 0 ? void 0 : _k.attributes.dateHandedFrom) || null,
                 dateHandedTo: ((_l = delivery.data) === null || _l === void 0 ? void 0 : _l.attributes.dateHandedTo) || null,
-                carrierId: ((_o = (_m = delivery.data) === null || _m === void 0 ? void 0 : _m.attributes.carrier.data) === null || _o === void 0 ? void 0 : _o.id) || null,
+                recipientId: ((_o = (_m = delivery.data) === null || _m === void 0 ? void 0 : _m.attributes.recipient.data) === null || _o === void 0 ? void 0 : _o.id) || null,
             },
         };
         return book;
