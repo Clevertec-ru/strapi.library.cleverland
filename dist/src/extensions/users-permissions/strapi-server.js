@@ -268,6 +268,34 @@ exports.default = (plugin) => {
             return Error("Error permisson");
         }
     };
+    // plugin.controllers.auth.forgotPassword = async (ctx) => {
+    //   ctx.query = { ...ctx.query, populate: "deep" };
+    //   console.log("strapi.entityService", ctx.request.body);
+    //   const response = await strapi.entityService.findMany(
+    //     "plugin::users-permissions.user",
+    //     {
+    //       filters: {
+    //         email: ctx.request.body.email,
+    //       },
+    //     }
+    //   );
+    // if (response[0]) {
+    //   console.log(response[0], "response");
+    //   await strapi
+    //     .plugin("email")
+    //     .service("email")
+    //     .send({
+    //       to: ctx.request.body.email,
+    //       from: "Administration <valadzkoaliaksei@gmail.com>",
+    //       subject: "Reset password",
+    //       text: "Reset password",
+    //       html: `<p>We heard that you lost your password. Sorry about that!</p>
+    //     <p>But don’t worry! You can use the following link to reset your password:</p>
+    //     <p><%= URL %>?code=<%= TOKEN %></p>`,
+    //     });
+    // }
+    //   return response?.[0] || "not found";
+    // };
     // plugin.policies[newPolicy] = (ctx) => {};
     // plugin.routes["content-api"].routes.push({
     //   method: "GET",
