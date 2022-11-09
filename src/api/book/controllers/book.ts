@@ -39,7 +39,7 @@ export default factories.createCoreController(
               images.data?.map(({ attributes }) => ({
                 url: attributes.url,
               }))[0] || null,
-            categories: categories.data.length
+            categories: categories.data?.length
               ? categories.data.map(({ attributes }) => attributes.name)
               : null,
             id,

@@ -6,7 +6,7 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
         ctx.query = { ...ctx.query, populate: "deep" };
         const { data } = await super.find(ctx);
         const books = data.map(({ attributes: { issueYear, rating, title, authors, images, categories, booking, delivery, histories, }, id, }) => {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
             return ({
                 issueYear,
                 rating,
@@ -15,25 +15,25 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
                 image: ((_a = images.data) === null || _a === void 0 ? void 0 : _a.map(({ attributes }) => ({
                     url: attributes.url,
                 }))[0]) || null,
-                categories: categories.data.length
+                categories: ((_b = categories.data) === null || _b === void 0 ? void 0 : _b.length)
                     ? categories.data.map(({ attributes }) => attributes.name)
                     : null,
                 id,
                 booking: {
-                    id: ((_b = booking.data) === null || _b === void 0 ? void 0 : _b.id) || null,
-                    order: ((_c = booking.data) === null || _c === void 0 ? void 0 : _c.attributes.order) || false,
-                    dateOrder: ((_d = booking.data) === null || _d === void 0 ? void 0 : _d.attributes.dateOrder) || null,
-                    customerId: ((_f = (_e = booking.data) === null || _e === void 0 ? void 0 : _e.attributes.customer.data) === null || _f === void 0 ? void 0 : _f.id) || null,
+                    id: ((_c = booking.data) === null || _c === void 0 ? void 0 : _c.id) || null,
+                    order: ((_d = booking.data) === null || _d === void 0 ? void 0 : _d.attributes.order) || false,
+                    dateOrder: ((_e = booking.data) === null || _e === void 0 ? void 0 : _e.attributes.dateOrder) || null,
+                    customerId: ((_g = (_f = booking.data) === null || _f === void 0 ? void 0 : _f.attributes.customer.data) === null || _g === void 0 ? void 0 : _g.id) || null,
                 },
                 delivery: {
-                    id: ((_g = delivery.data) === null || _g === void 0 ? void 0 : _g.id) || null,
-                    handed: ((_h = delivery.data) === null || _h === void 0 ? void 0 : _h.attributes.handed) || false,
-                    dateHandedFrom: ((_j = delivery.data) === null || _j === void 0 ? void 0 : _j.attributes.dateHandedFrom) || null,
-                    dateHandedTo: ((_k = delivery.data) === null || _k === void 0 ? void 0 : _k.attributes.dateHandedTo) || null,
-                    recipientId: ((_m = (_l = delivery.data) === null || _l === void 0 ? void 0 : _l.attributes.recipient.data) === null || _m === void 0 ? void 0 : _m.id) || null,
+                    id: ((_h = delivery.data) === null || _h === void 0 ? void 0 : _h.id) || null,
+                    handed: ((_j = delivery.data) === null || _j === void 0 ? void 0 : _j.attributes.handed) || false,
+                    dateHandedFrom: ((_k = delivery.data) === null || _k === void 0 ? void 0 : _k.attributes.dateHandedFrom) || null,
+                    dateHandedTo: ((_l = delivery.data) === null || _l === void 0 ? void 0 : _l.attributes.dateHandedTo) || null,
+                    recipientId: ((_o = (_m = delivery.data) === null || _m === void 0 ? void 0 : _m.attributes.recipient.data) === null || _o === void 0 ? void 0 : _o.id) || null,
                 },
-                histories: ((_o = histories.data) === null || _o === void 0 ? void 0 : _o.length)
-                    ? (_p = histories.data) === null || _p === void 0 ? void 0 : _p.map(({ id, attributes }) => {
+                histories: ((_p = histories.data) === null || _p === void 0 ? void 0 : _p.length)
+                    ? (_q = histories.data) === null || _q === void 0 ? void 0 : _q.map(({ id, attributes }) => {
                         var _a;
                         return ({
                             id: id || null,
