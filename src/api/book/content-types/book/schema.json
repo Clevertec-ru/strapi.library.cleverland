@@ -17,13 +17,6 @@
       "required": true,
       "unique": false
     },
-    "rating": {
-      "type": "decimal",
-      "required": true,
-      "default": 0,
-      "max": 5,
-      "min": 0
-    },
     "issueYear": {
       "type": "biginteger"
     },

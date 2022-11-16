@@ -8,19 +8,30 @@ import {
   BooksDataResponseType,
 } from "../../../types/book";
 
+const getRating = (comments: any): number | null => {
+  return comments?.data.length
+    ? Math.round(
+        (comments.data?.reduce((acc: number, { attributes: { rating } }) => {
+          acc = acc + rating;
+          return acc;
+        }, 0) /
+          comments.data.length) *
+          100
+      ) / 100
+    : null;
+};
+
 export default factories.createCoreController(
   "api::book.book",
   ({ strapi }: { strapi: Strapi }) => ({
     async find(ctx) {
       ctx.query = { ...ctx.query, populate: "deep" };
       const { data }: BooksDataResponseType = await super.find(ctx);
-
       const books =
         data.map(
           ({
             attributes: {
               issueYear,
-              rating,
               title,
               authors,
               images,
@@ -28,11 +39,12 @@ export default factories.createCoreController(
               booking,
               delivery,
               histories,
+              comments,
             },
             id,
           }) => ({
             issueYear,
-            rating,
+            rating: getRating(comments),
             title,
             authors,
             image:
@@ -43,20 +55,39 @@ export default factories.createCoreController(
               ? categories.data.map(({ attributes }) => attributes.name)
               : null,
             id,
-            booking: {
-              id: booking.data?.id || null,
-              order: booking.data?.attributes.order || false,
-              dateOrder: booking.data?.attributes.dateOrder || null,
-              customerId: booking.data?.attributes.customer.data?.id || null,
-            },
-            delivery: {
-              id: delivery.data?.id || null,
-              handed: delivery.data?.attributes.handed || false,
-              dateHandedFrom: delivery.data?.attributes.dateHandedFrom || null,
-              dateHandedTo: delivery.data?.attributes.dateHandedTo || null,
-              recipientId: delivery.data?.attributes.recipient.data?.id || null,
-            },
-            histories: histories.data?.length
+            booking: booking?.data
+              ? {
+                  id: booking.data?.id || null,
+                  order: booking.data?.attributes.order || false,
+                  dateOrder: booking.data?.attributes.dateOrder || null,
+                  customerId:
+                    booking.data?.attributes.customer.data?.id || null,
+                  customerFirstName:
+                    booking.data?.attributes.customer.data?.attributes
+                      .firstName || null,
+                  customerLastName:
+                    booking.data?.attributes.customer.data?.attributes
+                      .lastName || null,
+                }
+              : null,
+            delivery: delivery?.data
+              ? {
+                  id: delivery.data?.id || null,
+                  handed: delivery.data?.attributes.handed || false,
+                  dateHandedFrom:
+                    delivery.data?.attributes.dateHandedFrom || null,
+                  dateHandedTo: delivery.data?.attributes.dateHandedTo || null,
+                  recipientId:
+                    delivery.data?.attributes.recipient?.data?.id || null,
+                  recipientFirstName:
+                    delivery.data?.attributes.recipient?.data?.attributes
+                      .firstName || null,
+                  recipientLastName:
+                    delivery.data?.attributes.recipient?.data?.attributes
+                      .lastName || null,
+                }
+              : null,
+            histories: histories?.data?.length
               ? histories.data?.map(({ id, attributes }) => ({
                   id: id || null,
                   userId: attributes.user.data?.id || null,
@@ -76,7 +107,6 @@ export default factories.createCoreController(
           id,
           attributes: {
             title,
-            rating,
             issueYear,
             description,
             publish,
@@ -99,7 +129,7 @@ export default factories.createCoreController(
       const book = {
         id,
         title,
-        rating,
+        rating: getRating(comments),
         issueYear,
         description,
         publish,
@@ -140,6 +170,11 @@ export default factories.createCoreController(
           order: booking.data?.attributes.order || false,
           dateOrder: booking.data?.attributes.dateOrder || null,
           customerId: booking.data?.attributes.customer.data?.id || null,
+          customerFirstName:
+            booking.data?.attributes.customer.data?.attributes.firstName ||
+            null,
+          customerLastName:
+            booking.data?.attributes.customer.data?.attributes.lastName || null,
         },
         delivery: {
           id: delivery.data?.id || null,
@@ -147,6 +182,12 @@ export default factories.createCoreController(
           dateHandedFrom: delivery.data?.attributes.dateHandedFrom || null,
           dateHandedTo: delivery.data?.attributes.dateHandedTo || null,
           recipientId: delivery.data?.attributes.recipient.data?.id || null,
+          recipientFirstName:
+            delivery.data?.attributes.recipient.data?.attributes.firstName ||
+            null,
+          recipientLastName:
+            delivery.data?.attributes.recipient.data?.attributes.lastName ||
+            null,
         },
         histories: histories.data?.length
           ? histories.data?.map(({ id, attributes }) => ({
