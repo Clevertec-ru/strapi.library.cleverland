@@ -22,6 +22,11 @@
       "relation": "manyToMany",
       "target": "api::book.book",
       "mappedBy": "categories"
+    },
+    "path": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }
