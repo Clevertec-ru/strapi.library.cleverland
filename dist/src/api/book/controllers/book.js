@@ -65,7 +65,7 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
         return books;
     },
     async findOne(ctx) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
         ctx.query = { ...ctx.query, populate: "deep,3" };
         const response = await super.findOne(ctx);
         if (!response)
@@ -108,28 +108,29 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
                     });
                 })
                 : null,
-            booking: {
-                id: ((_c = booking.data) === null || _c === void 0 ? void 0 : _c.id) || null,
-                order: ((_d = booking.data) === null || _d === void 0 ? void 0 : _d.attributes.order) || false,
-                dateOrder: ((_e = booking.data) === null || _e === void 0 ? void 0 : _e.attributes.dateOrder) || null,
-                customerId: ((_g = (_f = booking.data) === null || _f === void 0 ? void 0 : _f.attributes.customer.data) === null || _g === void 0 ? void 0 : _g.id) || null,
-                customerFirstName: ((_j = (_h = booking.data) === null || _h === void 0 ? void 0 : _h.attributes.customer.data) === null || _j === void 0 ? void 0 : _j.attributes.firstName) ||
-                    null,
-                customerLastName: ((_l = (_k = booking.data) === null || _k === void 0 ? void 0 : _k.attributes.customer.data) === null || _l === void 0 ? void 0 : _l.attributes.lastName) || null,
-            },
-            delivery: {
-                id: ((_m = delivery.data) === null || _m === void 0 ? void 0 : _m.id) || null,
-                handed: ((_o = delivery.data) === null || _o === void 0 ? void 0 : _o.attributes.handed) || false,
-                dateHandedFrom: ((_p = delivery.data) === null || _p === void 0 ? void 0 : _p.attributes.dateHandedFrom) || null,
-                dateHandedTo: ((_q = delivery.data) === null || _q === void 0 ? void 0 : _q.attributes.dateHandedTo) || null,
-                recipientId: ((_s = (_r = delivery.data) === null || _r === void 0 ? void 0 : _r.attributes.recipient.data) === null || _s === void 0 ? void 0 : _s.id) || null,
-                recipientFirstName: ((_u = (_t = delivery.data) === null || _t === void 0 ? void 0 : _t.attributes.recipient.data) === null || _u === void 0 ? void 0 : _u.attributes.firstName) ||
-                    null,
-                recipientLastName: ((_w = (_v = delivery.data) === null || _v === void 0 ? void 0 : _v.attributes.recipient.data) === null || _w === void 0 ? void 0 : _w.attributes.lastName) ||
-                    null,
-            },
-            histories: ((_x = histories.data) === null || _x === void 0 ? void 0 : _x.length)
-                ? (_y = histories.data) === null || _y === void 0 ? void 0 : _y.map(({ id, attributes }) => {
+            booking: (booking === null || booking === void 0 ? void 0 : booking.data)
+                ? {
+                    id: ((_c = booking.data) === null || _c === void 0 ? void 0 : _c.id) || null,
+                    order: ((_d = booking.data) === null || _d === void 0 ? void 0 : _d.attributes.order) || false,
+                    dateOrder: ((_e = booking.data) === null || _e === void 0 ? void 0 : _e.attributes.dateOrder) || null,
+                    customerId: ((_g = (_f = booking.data) === null || _f === void 0 ? void 0 : _f.attributes.customer.data) === null || _g === void 0 ? void 0 : _g.id) || null,
+                    customerFirstName: ((_j = (_h = booking.data) === null || _h === void 0 ? void 0 : _h.attributes.customer.data) === null || _j === void 0 ? void 0 : _j.attributes.firstName) || null,
+                    customerLastName: ((_l = (_k = booking.data) === null || _k === void 0 ? void 0 : _k.attributes.customer.data) === null || _l === void 0 ? void 0 : _l.attributes.lastName) || null,
+                }
+                : null,
+            delivery: (delivery === null || delivery === void 0 ? void 0 : delivery.data)
+                ? {
+                    id: ((_m = delivery.data) === null || _m === void 0 ? void 0 : _m.id) || null,
+                    handed: ((_o = delivery.data) === null || _o === void 0 ? void 0 : _o.attributes.handed) || false,
+                    dateHandedFrom: ((_p = delivery.data) === null || _p === void 0 ? void 0 : _p.attributes.dateHandedFrom) || null,
+                    dateHandedTo: ((_q = delivery.data) === null || _q === void 0 ? void 0 : _q.attributes.dateHandedTo) || null,
+                    recipientId: ((_t = (_s = (_r = delivery.data) === null || _r === void 0 ? void 0 : _r.attributes.recipient) === null || _s === void 0 ? void 0 : _s.data) === null || _t === void 0 ? void 0 : _t.id) || null,
+                    recipientFirstName: ((_w = (_v = (_u = delivery.data) === null || _u === void 0 ? void 0 : _u.attributes.recipient) === null || _v === void 0 ? void 0 : _v.data) === null || _w === void 0 ? void 0 : _w.attributes.firstName) || null,
+                    recipientLastName: ((_z = (_y = (_x = delivery.data) === null || _x === void 0 ? void 0 : _x.attributes.recipient) === null || _y === void 0 ? void 0 : _y.data) === null || _z === void 0 ? void 0 : _z.attributes.lastName) || null,
+                }
+                : null,
+            histories: ((_0 = histories === null || histories === void 0 ? void 0 : histories.data) === null || _0 === void 0 ? void 0 : _0.length)
+                ? (_1 = histories.data) === null || _1 === void 0 ? void 0 : _1.map(({ id, attributes }) => {
                     var _a;
                     return ({
                         id: id || null,
