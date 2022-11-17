@@ -1,11 +1,11 @@
 export default (plugin) => {
   plugin.controllers.user.me = async (ctx) => {
-    ctx.query = { ...ctx.query, populate: "deep" };
+    ctx.query = { ...ctx.query, populate: "deep,3" };
     const response = await strapi.entityService.findOne(
       "plugin::users-permissions.user",
       ctx.state.user.id,
       {
-        populate: "deep",
+        populate: "deep,3",
       }
     );
     const {
@@ -111,13 +111,13 @@ export default (plugin) => {
   };
 
   plugin.controllers.user.findOne = async (ctx) => {
-    ctx.query = { ...ctx.query, populate: "deep" };
+    ctx.query = { ...ctx.query, populate: "deep,3" };
     if (ctx.params.id == ctx.state.user.id) {
       const response = await strapi.entityService.findOne(
         "plugin::users-permissions.user",
         ctx.params.id,
         {
-          populate: "deep",
+          populate: "deep,3",
         }
       );
       const {
@@ -223,14 +223,14 @@ export default (plugin) => {
   };
 
   plugin.controllers.user.update = async (ctx) => {
-    ctx.query = { ...ctx.query, populate: "deep" };
+    ctx.query = { ...ctx.query, populate: "deep,3" };
     if (ctx.params.id == ctx.state.user.id) {
       const response = await strapi.entityService.update(
         "plugin::users-permissions.user",
         ctx.params.id,
         {
           data: ctx.request.body,
-          populate: "deep",
+          populate: "deep,3",
         }
       );
       const {

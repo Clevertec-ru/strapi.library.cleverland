@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ({ env }) => ({
-    // ...
     email: {
         config: {
             provider: "nodemailer",
@@ -19,5 +18,4 @@ exports.default = ({ env }) => ({
             },
         },
     },
-    // ...
 });

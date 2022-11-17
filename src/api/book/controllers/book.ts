@@ -25,7 +25,7 @@ export default factories.createCoreController(
   "api::book.book",
   ({ strapi }: { strapi: Strapi }) => ({
     async find(ctx) {
-      ctx.query = { ...ctx.query, populate: "deep" };
+      ctx.query = { ...ctx.query, populate: "deep,3" };
       const { data }: BooksDataResponseType = await super.find(ctx);
       const books =
         data.map(
@@ -99,7 +99,7 @@ export default factories.createCoreController(
     },
 
     async findOne(ctx) {
-      ctx.query = { ...ctx.query, populate: "deep" };
+      ctx.query = { ...ctx.query, populate: "deep,3" };
       const response: BookDataResponseType = await super.findOne(ctx);
       if (!response) return Error("Not found");
       const {
