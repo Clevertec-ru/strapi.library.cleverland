@@ -12,8 +12,9 @@ export default factories.createCoreController(
       const { data }: CategoryDataType = await super.find(ctx);
 
       const categories: CategoryType[] = data.map(
-        ({ attributes: { name }, id }) => ({
+        ({ attributes: { name, path }, id }) => ({
           name,
+          path,
           id,
         })
       );

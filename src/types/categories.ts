@@ -3,6 +3,7 @@ export type CategoryDataType = {
     id: number;
     attributes: {
       name: string;
+      path: string;
       createdAt: Date;
       updatedAt: Date;
       publishedAt: Date;
@@ -12,5 +13,6 @@ export type CategoryDataType = {
 
 export type CategoryType = {
   name: string;
+  path: string;
   id: number;
 };
