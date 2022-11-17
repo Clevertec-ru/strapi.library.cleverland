@@ -14,7 +14,7 @@ const getRating = (comments) => {
 };
 exports.default = strapi_1.factories.createCoreController("api::book.book", ({ strapi }) => ({
     async find(ctx) {
-        ctx.query = { ...ctx.query, populate: "deep" };
+        ctx.query = { ...ctx.query, populate: "deep,3" };
         const { data } = await super.find(ctx);
         const books = data.map(({ attributes: { issueYear, title, authors, images, categories, booking, delivery, histories, comments, }, id, }) => {
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
@@ -66,7 +66,7 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
     },
     async findOne(ctx) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
-        ctx.query = { ...ctx.query, populate: "deep" };
+        ctx.query = { ...ctx.query, populate: "deep,3" };
         const response = await super.findOne(ctx);
         if (!response)
             return Error("Not found");

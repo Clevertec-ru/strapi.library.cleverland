@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = (plugin) => {
     plugin.controllers.user.me = async (ctx) => {
         var _a, _b, _c, _d, _e;
-        ctx.query = { ...ctx.query, populate: "deep" };
+        ctx.query = { ...ctx.query, populate: "deep,3" };
         const response = await strapi.entityService.findOne("plugin::users-permissions.user", ctx.state.user.id, {
-            populate: "deep",
+            populate: "deep,3",
         });
         const { id, username, email, confirmed, blocked, createdAt, updatedAt, firstName, lastName, phone, role, comments, avatar, booking, delivery, history, } = response;
         const user = {
@@ -90,10 +90,10 @@ exports.default = (plugin) => {
     };
     plugin.controllers.user.findOne = async (ctx) => {
         var _a, _b, _c, _d, _e;
-        ctx.query = { ...ctx.query, populate: "deep" };
+        ctx.query = { ...ctx.query, populate: "deep,3" };
         if (ctx.params.id == ctx.state.user.id) {
             const response = await strapi.entityService.findOne("plugin::users-permissions.user", ctx.params.id, {
-                populate: "deep",
+                populate: "deep,3",
             });
             const { id, username, email, confirmed, blocked, createdAt, updatedAt, firstName, lastName, phone, role, comments, avatar, booking, delivery, history, } = response;
             const user = {
@@ -177,11 +177,11 @@ exports.default = (plugin) => {
     };
     plugin.controllers.user.update = async (ctx) => {
         var _a, _b, _c, _d, _e;
-        ctx.query = { ...ctx.query, populate: "deep" };
+        ctx.query = { ...ctx.query, populate: "deep,3" };
         if (ctx.params.id == ctx.state.user.id) {
             const response = await strapi.entityService.update("plugin::users-permissions.user", ctx.params.id, {
                 data: ctx.request.body,
-                populate: "deep",
+                populate: "deep,3",
             });
             const { id, username, email, confirmed, blocked, createdAt, updatedAt, firstName, lastName, phone, role, comments, avatar, booking, delivery, history, } = response;
             const user = {
