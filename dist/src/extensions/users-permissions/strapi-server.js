@@ -31,7 +31,7 @@ exports.default = (plugin) => {
                 text,
                 bookId: book.id,
             }))) || null,
-            avatar: avatar.url,
+            avatar: (avatar === null || avatar === void 0 ? void 0 : avatar.url) || null,
             booking: {
                 id: (booking === null || booking === void 0 ? void 0 : booking.id) || null,
                 order: (booking === null || booking === void 0 ? void 0 : booking.order) || null,
@@ -119,7 +119,7 @@ exports.default = (plugin) => {
                     text,
                     bookId: book.id,
                 }))) || null,
-                avatar: avatar.url,
+                avatar: (avatar === null || avatar === void 0 ? void 0 : avatar.url) || null,
                 booking: {
                     id: (booking === null || booking === void 0 ? void 0 : booking.id) || null,
                     order: (booking === null || booking === void 0 ? void 0 : booking.order) || null,
@@ -207,7 +207,7 @@ exports.default = (plugin) => {
                     text,
                     bookId: book.id,
                 }))) || null,
-                avatar: avatar.url,
+                avatar: (avatar === null || avatar === void 0 ? void 0 : avatar.url) || null,
                 booking: {
                     id: (booking === null || booking === void 0 ? void 0 : booking.id) || null,
                     order: (booking === null || booking === void 0 ? void 0 : booking.order) || null,
@@ -268,11 +268,131 @@ exports.default = (plugin) => {
             return Error("Error permisson");
         }
     };
+    // plugin.controllers.auth.local = async (ctx) => {
+    //   console.log("plugin.controllers.auth.local");
+    //   ctx.query = { ...ctx.query, populate: "deep,3" };
+    //   const response = await strapi.entityService.findOne(
+    //     "plugin::users-permissions.auth",
+    //     ctx.state.user.id,
+    //     {
+    //       populate: "deep,3",
+    //     }
+    //   );
+    //   const {
+    //     id,
+    //     username,
+    //     email,
+    //     confirmed,
+    //     blocked,
+    //     createdAt,
+    //     updatedAt,
+    //     firstName,
+    //     lastName,
+    //     phone,
+    //     role,
+    //     comments,
+    //     avatar,
+    //     booking,
+    //     delivery,
+    //     history,
+    //   } = response;
+    //   const user = {
+    //     id,
+    //     username,
+    //     email,
+    //     confirmed,
+    //     blocked,
+    //     createdAt,
+    //     updatedAt,
+    //     firstName,
+    //     lastName,
+    //     phone,
+    //     role: {
+    //       id: role.id,
+    //       name: role.name,
+    //       description: role.description,
+    //       type: role.type,
+    //     },
+    //     comments:
+    //       comments?.map(({ id, rating, text, book }) => ({
+    //         id,
+    //         rating,
+    //         text,
+    //         bookId: book.id,
+    //       })) || null,
+    //     avatar: avatar.url,
+    //     booking: {
+    //       id: booking?.id || null,
+    //       order: booking?.order || null,
+    //       dateOrder: booking?.dateOrder || null,
+    //       book: booking?.book
+    //         ? {
+    //             id: booking.book.id,
+    //             title: booking.book.title,
+    //             rating: booking.book.rating,
+    //             issueYear: booking.book.issueYear,
+    //             authors: booking.book.authors,
+    //             image:
+    //               booking.book.images?.data?.map(({ attributes }) => ({
+    //                 url: attributes.url,
+    //               }))[0] || null,
+    //           }
+    //         : null,
+    //     },
+    //     delivery: {
+    //       id: delivery?.id || null,
+    //       handed: delivery?.handed || null,
+    //       dateHandedFrom: delivery?.dateHandedFrom || null,
+    //       dateHandedTo: delivery?.dateHandedTo || null,
+    //       book: delivery?.book
+    //         ? {
+    //             id: delivery.book.id,
+    //             title: delivery.book.title,
+    //             rating: delivery.book.rating,
+    //             issueYear: delivery.book.issueYear,
+    //             authors: delivery.book.authors,
+    //             image:
+    //               delivery.book.images?.data?.map(({ attributes }) => ({
+    //                 url: attributes.url,
+    //               }))[0] || null,
+    //           }
+    //         : null,
+    //     },
+    //     history: {
+    //       id: history?.id || null,
+    //       books: history?.books?.length
+    //         ? history.books.map(
+    //             ({ id, title, rating, issueYear, authors, images }) => ({
+    //               id,
+    //               title,
+    //               rating,
+    //               issueYear,
+    //               authors,
+    //               image:
+    //                 images?.data?.map(({ attributes }) => ({
+    //                   url: attributes.url,
+    //                 }))[0] || null,
+    //             })
+    //           )
+    //         : null,
+    //     },
+    //   };
+    //   return user;
+    // };
     // plugin.policies[newPolicy] = (ctx) => {};
     // plugin.routes["content-api"].routes.push({
     //   method: "GET",
     //   path: "/route-path",
     //   handler: "controller.action",
+    // });
+    // plugin.routes["content-api"].routes.push({
+    //   method: "POST",
+    //   path: "/api/auth/local",
+    //   handler: "auth.local",
+    //   config: {
+    //     policies: [],
+    //     prefix: "",
+    //   },
     // });
     return plugin;
 };
