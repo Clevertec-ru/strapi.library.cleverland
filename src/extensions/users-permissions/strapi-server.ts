@@ -112,7 +112,7 @@ export default (plugin) => {
 
   plugin.controllers.user.findOne = async (ctx) => {
     ctx.query = { ...ctx.query, populate: "deep,3" };
-    if (ctx.params.id == ctx.state.user.id) {
+    if (ctx.params.id == ctx.state.user?.id) {
       const response = await strapi.entityService.findOne(
         "plugin::users-permissions.user",
         ctx.params.id,
@@ -218,13 +218,16 @@ export default (plugin) => {
       };
       return user;
     } else {
-      return Error("Error permisson");
+      return ctx.badRequest(
+        "Нет прав для получения данных этого пользователя",
+        { id: ctx.params.id, userId: ctx.state.user?.id }
+      );
     }
   };
 
   plugin.controllers.user.update = async (ctx) => {
     ctx.query = { ...ctx.query, populate: "deep,3" };
-    if (ctx.params.id == ctx.state.user.id) {
+    if (ctx.params.id == ctx.state.user?.id) {
       const response = await strapi.entityService.update(
         "plugin::users-permissions.user",
         ctx.params.id,
@@ -334,7 +337,10 @@ export default (plugin) => {
       };
       return user;
     } else {
-      return Error("Error permisson");
+      return ctx.badRequest("Нет прав для обновления данного пользователя", {
+        id: ctx.params.id,
+        userId: ctx.state.user?.id,
+      });
     }
   };
 

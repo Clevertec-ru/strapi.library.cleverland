@@ -66,10 +66,13 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
     },
     async findOne(ctx) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
-        ctx.query = { ...ctx.query, populate: "deep,3" };
+        ctx.query = { ...ctx.query, populate: "deep,4" };
         const response = await super.findOne(ctx);
-        if (!response)
-            return Error("Not found");
+        if (!response) {
+            return ctx.badRequest("Книга не найдена по данному id", {
+                id: ctx.params.id,
+            });
+        }
         const { data: { id, attributes: { title, issueYear, description, publish, pages, cover, weight, format, ISBN, producer, authors, images, categories, comments, booking, delivery, histories, }, }, } = response;
         const book = {
             id,
@@ -114,8 +117,10 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
                     order: ((_d = booking.data) === null || _d === void 0 ? void 0 : _d.attributes.order) || false,
                     dateOrder: ((_e = booking.data) === null || _e === void 0 ? void 0 : _e.attributes.dateOrder) || null,
                     customerId: ((_g = (_f = booking.data) === null || _f === void 0 ? void 0 : _f.attributes.customer.data) === null || _g === void 0 ? void 0 : _g.id) || null,
-                    customerFirstName: ((_j = (_h = booking.data) === null || _h === void 0 ? void 0 : _h.attributes.customer.data) === null || _j === void 0 ? void 0 : _j.attributes.firstName) || null,
-                    customerLastName: ((_l = (_k = booking.data) === null || _k === void 0 ? void 0 : _k.attributes.customer.data) === null || _l === void 0 ? void 0 : _l.attributes.lastName) || null,
+                    customerFirstName: ((_j = (_h = booking.data) === null || _h === void 0 ? void 0 : _h.attributes.customer.data) === null || _j === void 0 ? void 0 : _j.attributes.firstName) ||
+                        null,
+                    customerLastName: ((_l = (_k = booking.data) === null || _k === void 0 ? void 0 : _k.attributes.customer.data) === null || _l === void 0 ? void 0 : _l.attributes.lastName) ||
+                        null,
                 }
                 : null,
             delivery: (delivery === null || delivery === void 0 ? void 0 : delivery.data)
