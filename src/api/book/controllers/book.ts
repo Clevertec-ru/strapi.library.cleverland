@@ -101,7 +101,11 @@ export default factories.createCoreController(
     async findOne(ctx) {
       ctx.query = { ...ctx.query, populate: "deep,4" };
       const response: BookDataResponseType = await super.findOne(ctx);
-      if (!response) return Error("Not found");
+      if (!response) {
+        return ctx.badRequest("Книга не найдена по данному id", {
+          id: ctx.params.id,
+        });
+      }
       const {
         data: {
           id,
@@ -165,27 +169,25 @@ export default factories.createCoreController(
               })
             )
           : null,
-          booking: booking?.data
+        booking: booking?.data
           ? {
               id: booking.data?.id || null,
               order: booking.data?.attributes.order || false,
               dateOrder: booking.data?.attributes.dateOrder || null,
-              customerId:
-                booking.data?.attributes.customer.data?.id || null,
+              customerId: booking.data?.attributes.customer.data?.id || null,
               customerFirstName:
-                booking.data?.attributes.customer.data?.attributes
-                  .firstName || null,
+                booking.data?.attributes.customer.data?.attributes.firstName ||
+                null,
               customerLastName:
-                booking.data?.attributes.customer.data?.attributes
-                  .lastName || null,
+                booking.data?.attributes.customer.data?.attributes.lastName ||
+                null,
             }
           : null,
         delivery: delivery?.data
           ? {
               id: delivery.data?.id || null,
               handed: delivery.data?.attributes.handed || false,
-              dateHandedFrom:
-                delivery.data?.attributes.dateHandedFrom || null,
+              dateHandedFrom: delivery.data?.attributes.dateHandedFrom || null,
               dateHandedTo: delivery.data?.attributes.dateHandedTo || null,
               recipientId:
                 delivery.data?.attributes.recipient?.data?.id || null,

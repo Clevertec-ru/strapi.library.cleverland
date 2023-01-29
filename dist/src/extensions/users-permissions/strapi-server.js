@@ -89,9 +89,9 @@ exports.default = (plugin) => {
         return user;
     };
     plugin.controllers.user.findOne = async (ctx) => {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f, _g;
         ctx.query = { ...ctx.query, populate: "deep,3" };
-        if (ctx.params.id == ctx.state.user.id) {
+        if (ctx.params.id == ((_a = ctx.state.user) === null || _a === void 0 ? void 0 : _a.id)) {
             const response = await strapi.entityService.findOne("plugin::users-permissions.user", ctx.params.id, {
                 populate: "deep,3",
             });
@@ -131,7 +131,7 @@ exports.default = (plugin) => {
                             rating: booking.book.rating,
                             issueYear: booking.book.issueYear,
                             authors: booking.book.authors,
-                            image: ((_b = (_a = booking.book.images) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.map(({ attributes }) => ({
+                            image: ((_c = (_b = booking.book.images) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.map(({ attributes }) => ({
                                 url: attributes.url,
                             }))[0]) || null,
                         }
@@ -149,7 +149,7 @@ exports.default = (plugin) => {
                             rating: delivery.book.rating,
                             issueYear: delivery.book.issueYear,
                             authors: delivery.book.authors,
-                            image: ((_d = (_c = delivery.book.images) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.map(({ attributes }) => ({
+                            image: ((_e = (_d = delivery.book.images) === null || _d === void 0 ? void 0 : _d.data) === null || _e === void 0 ? void 0 : _e.map(({ attributes }) => ({
                                 url: attributes.url,
                             }))[0]) || null,
                         }
@@ -157,7 +157,7 @@ exports.default = (plugin) => {
                 },
                 history: {
                     id: (history === null || history === void 0 ? void 0 : history.id) || null,
-                    books: ((_e = history === null || history === void 0 ? void 0 : history.books) === null || _e === void 0 ? void 0 : _e.length)
+                    books: ((_f = history === null || history === void 0 ? void 0 : history.books) === null || _f === void 0 ? void 0 : _f.length)
                         ? history.books.map(({ id, title, rating, issueYear, authors, images }) => ({
                             id,
                             title,
@@ -172,13 +172,13 @@ exports.default = (plugin) => {
             return user;
         }
         else {
-            return Error("Error permisson");
+            return ctx.badRequest("Нет прав для получения данных этого пользователя", { id: ctx.params.id, userId: (_g = ctx.state.user) === null || _g === void 0 ? void 0 : _g.id });
         }
     };
     plugin.controllers.user.update = async (ctx) => {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f, _g;
         ctx.query = { ...ctx.query, populate: "deep,3" };
-        if (ctx.params.id == ctx.state.user.id) {
+        if (ctx.params.id == ((_a = ctx.state.user) === null || _a === void 0 ? void 0 : _a.id)) {
             const response = await strapi.entityService.update("plugin::users-permissions.user", ctx.params.id, {
                 data: ctx.request.body,
                 populate: "deep,3",
@@ -219,7 +219,7 @@ exports.default = (plugin) => {
                             rating: booking.book.rating,
                             issueYear: booking.book.issueYear,
                             authors: booking.book.authors,
-                            image: ((_b = (_a = booking.book.images) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.map(({ attributes }) => ({
+                            image: ((_c = (_b = booking.book.images) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.map(({ attributes }) => ({
                                 url: attributes.url,
                             }))[0]) || null,
                         }
@@ -237,7 +237,7 @@ exports.default = (plugin) => {
                             rating: delivery.book.rating,
                             issueYear: delivery.book.issueYear,
                             authors: delivery.book.authors,
-                            image: ((_d = (_c = delivery.book.images) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.map(({ attributes }) => ({
+                            image: ((_e = (_d = delivery.book.images) === null || _d === void 0 ? void 0 : _d.data) === null || _e === void 0 ? void 0 : _e.map(({ attributes }) => ({
                                 url: attributes.url,
                             }))[0]) || null,
                         }
@@ -245,7 +245,7 @@ exports.default = (plugin) => {
                 },
                 history: {
                     id: (history === null || history === void 0 ? void 0 : history.id) || null,
-                    books: ((_e = history === null || history === void 0 ? void 0 : history.books) === null || _e === void 0 ? void 0 : _e.length)
+                    books: ((_f = history === null || history === void 0 ? void 0 : history.books) === null || _f === void 0 ? void 0 : _f.length)
                         ? history.books.map(({ id, title, rating, issueYear, authors, images }) => {
                             var _a;
                             return ({
@@ -265,7 +265,10 @@ exports.default = (plugin) => {
             return user;
         }
         else {
-            return Error("Error permisson");
+            return ctx.badRequest("Нет прав для обновления данного пользователя", {
+                id: ctx.params.id,
+                userId: (_g = ctx.state.user) === null || _g === void 0 ? void 0 : _g.id,
+            });
         }
     };
     // plugin.controllers.auth.local = async (ctx) => {
