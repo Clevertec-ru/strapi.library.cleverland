@@ -14,12 +14,12 @@ exports.default = strapi_1.factories.createCoreController("api::comment.comment"
                 data: ctx.request.body.data,
             });
         }
-        if (!ctx.request.body.data.rating && ctx.request.body.data.rating !== 0) {
+        if (!ctx.request.body.data.rating) {
             return ctx.badRequest("Ошибка комментирования. Не передан параметр rating", {
                 rating: ctx.request.body.data.rating,
             });
         }
-        if (ctx.request.body.data.rating < 0 ||
+        if (ctx.request.body.data.rating < 1 ||
             ctx.request.body.data.rating > 5) {
             return ctx.badRequest("Ошибка комментирования. Не правильный параметр rating", {
                 rating: ctx.request.body.data.rating,

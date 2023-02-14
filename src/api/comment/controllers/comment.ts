@@ -26,7 +26,7 @@ export default factories.createCoreController(
         );
       }
 
-      if (!ctx.request.body.data.rating && ctx.request.body.data.rating !== 0) {
+      if (!ctx.request.body.data.rating) {
         return ctx.badRequest(
           "Ошибка комментирования. Не передан параметр rating",
           {
@@ -36,7 +36,7 @@ export default factories.createCoreController(
       }
 
       if (
-        ctx.request.body.data.rating < 0 ||
+        ctx.request.body.data.rating < 1 ||
         ctx.request.body.data.rating > 5
       ) {
         return ctx.badRequest(
