@@ -8,10 +8,10 @@ export const isDateAfter = (date: Date, baseDate: Date) => {
   const parseDate = date.setHours(0, 0, 0, 0);
   let parseBaseDate = baseDate.setHours(0, 0, 0, 0);
   if (baseDate.getDay() === 0) {
-    parseBaseDate = new Date(parseBaseDate).setDate(new Date().getDate() + 1);
+    parseBaseDate = new Date(parseBaseDate).setDate(baseDate.getDate() + 1);
   }
   if (baseDate.getDay() === 6) {
-    parseBaseDate = new Date(parseBaseDate).setDate(new Date().getDate() + 2);
+    parseBaseDate = new Date(parseBaseDate).setDate(baseDate.getDate() + 2);
   }
   return parseDate > parseBaseDate;
 };
