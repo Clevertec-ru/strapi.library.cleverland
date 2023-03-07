@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = (plugin) => {
     plugin.controllers.user.me = async (ctx) => {
         var _a, _b, _c, _d, _e;
-        ctx.query = { ...ctx.query, populate: "deep,3" };
+        ctx.query = { ...ctx.query, populate: "deep,4" };
         const response = await strapi.entityService.findOne("plugin::users-permissions.user", ctx.state.user.id, {
             populate: "deep,3",
         });
