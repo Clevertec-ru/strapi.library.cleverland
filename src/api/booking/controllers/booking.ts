@@ -3,6 +3,7 @@
  */
 import { Strapi } from "@strapi/strapi";
 import { factories } from "@strapi/strapi";
+import { sanitize } from "@strapi/utils";
 
 import {
   isDateBefore,
@@ -11,6 +12,8 @@ import {
   isDateHoliday,
   isDateEqual,
 } from "../../../utils/date-utils";
+
+const { contentAPI } = sanitize;
 
 export default factories.createCoreController(
   "api::booking.booking",
@@ -393,6 +396,11 @@ export default factories.createCoreController(
 
       const { data } = await super.delete(ctx);
       return data;
+    },
+
+    async deleteOld(ctx) {
+      const data = strapi.service("api::booking.booking").deleteOld();
+      ctx.body = data;
     },
   })
 );
