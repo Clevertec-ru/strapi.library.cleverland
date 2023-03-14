@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const strapi_1 = require("@strapi/strapi");
 exports.default = strapi_1.factories.createCoreController("api::comment.comment", ({ strapi }) => ({
     async create(ctx) {
-        var _a, _b;
+        var _a, _b, _c;
         if (!ctx.request.body) {
             return ctx.badRequest("Ошибка комментирования. Не передано тело запроса", {
                 body: ctx.request.body,
@@ -32,7 +32,10 @@ exports.default = strapi_1.factories.createCoreController("api::comment.comment"
         }
         const book = await strapi
             .service("api::book.book")
-            .findOne(ctx.request.body.data.book, ctx.query);
+            .findOne(ctx.request.body.data.book, {
+            ...ctx.query,
+            populate: "deep,3",
+        });
         if (!book) {
             return ctx.badRequest("Ошибка комментирования. Книга не найдена по данному id", {
                 id: ctx.request.body.data.book,
@@ -51,8 +54,14 @@ exports.default = strapi_1.factories.createCoreController("api::comment.comment"
         }
         if (ctx.request.body.data.user != ((_a = ctx.state.user) === null || _a === void 0 ? void 0 : _a.id)) {
             return ctx.badRequest("Ошибка комментирования. Нет прав коменторования не своего пользователя", {
-                customer: ctx.request.body.data.customer,
+                user: ctx.request.body.data.user,
                 userId: (_b = ctx.state.user) === null || _b === void 0 ? void 0 : _b.id,
+            });
+        }
+        if (!!((_c = book.comments) === null || _c === void 0 ? void 0 : _c.find((comment) => { var _a, _b; return ((_a = comment === null || comment === void 0 ? void 0 : comment.user) === null || _a === void 0 ? void 0 : _a.id) && ((_b = comment === null || comment === void 0 ? void 0 : comment.user) === null || _b === void 0 ? void 0 : _b.id) == ctx.request.body.data.user; }))) {
+            return ctx.badRequest("Ошибка комментирования. У вас уже есть коментарий в данной книге", {
+                user: ctx.request.body.data.user,
+                id: ctx.request.body.data.book,
             });
         }
         const { data } = await super.create(ctx);

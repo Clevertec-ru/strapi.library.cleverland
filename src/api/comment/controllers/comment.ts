@@ -58,7 +58,10 @@ export default factories.createCoreController(
 
       const book = await strapi
         .service("api::book.book")
-        .findOne(ctx.request.body.data.book, ctx.query);
+        .findOne(ctx.request.body.data.book, {
+          ...ctx.query,
+          populate: "deep,3",
+        });
       if (!book) {
         return ctx.badRequest(
           "Ошибка комментирования. Книга не найдена по данному id",
@@ -95,8 +98,22 @@ export default factories.createCoreController(
         return ctx.badRequest(
           "Ошибка комментирования. Нет прав коменторования не своего пользователя",
           {
-            customer: ctx.request.body.data.customer,
+            user: ctx.request.body.data.user,
             userId: ctx.state.user?.id,
+          }
+        );
+      }
+      if (
+        !!book.comments?.find(
+          (comment) =>
+            comment?.user?.id && comment?.user?.id == ctx.request.body.data.user
+        )
+      ) {
+        return ctx.badRequest(
+          "Ошибка комментирования. У вас уже есть коментарий в данной книге",
+          {
+            user: ctx.request.body.data.user,
+            id: ctx.request.body.data.book,
           }
         );
       }
