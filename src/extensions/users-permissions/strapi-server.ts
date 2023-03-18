@@ -5,7 +5,7 @@ export default (plugin) => {
       "plugin::users-permissions.user",
       ctx.state.user.id,
       {
-        populate: "deep,3",
+        populate: "deep,4",
       }
     );
     const {
@@ -111,13 +111,13 @@ export default (plugin) => {
   };
 
   plugin.controllers.user.findOne = async (ctx) => {
-    ctx.query = { ...ctx.query, populate: "deep,3" };
+    ctx.query = { ...ctx.query, populate: "deep,4" };
     if (ctx.params.id == ctx.state.user?.id) {
       const response = await strapi.entityService.findOne(
         "plugin::users-permissions.user",
         ctx.params.id,
         {
-          populate: "deep,3",
+          populate: "deep,4",
         }
       );
       const {
