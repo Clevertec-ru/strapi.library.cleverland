@@ -5,7 +5,7 @@ exports.default = (plugin) => {
         var _a, _b, _c, _d, _e;
         ctx.query = { ...ctx.query, populate: "deep,4" };
         const response = await strapi.entityService.findOne("plugin::users-permissions.user", ctx.state.user.id, {
-            populate: "deep,3",
+            populate: "deep,4",
         });
         const { id, username, email, confirmed, blocked, createdAt, updatedAt, firstName, lastName, phone, role, comments, avatar, booking, delivery, history, } = response;
         const user = {
@@ -43,9 +43,7 @@ exports.default = (plugin) => {
                         rating: booking.book.rating,
                         issueYear: booking.book.issueYear,
                         authors: booking.book.authors,
-                        image: ((_b = (_a = booking.book.images) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.map(({ attributes }) => ({
-                            url: attributes.url,
-                        }))[0]) || null,
+                        image: ((_b = (_a = booking.book.images) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.url) || null,
                     }
                     : null,
             },
@@ -61,9 +59,7 @@ exports.default = (plugin) => {
                         rating: delivery.book.rating,
                         issueYear: delivery.book.issueYear,
                         authors: delivery.book.authors,
-                        image: ((_d = (_c = delivery.book.images) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.map(({ attributes }) => ({
-                            url: attributes.url,
-                        }))[0]) || null,
+                        image: ((_d = (_c = delivery.book.images) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.url) || null,
                     }
                     : null,
             },
@@ -78,9 +74,7 @@ exports.default = (plugin) => {
                             rating,
                             issueYear,
                             authors,
-                            image: ((_a = images === null || images === void 0 ? void 0 : images.data) === null || _a === void 0 ? void 0 : _a.map(({ attributes }) => ({
-                                url: attributes.url,
-                            }))[0]) || null,
+                            image: ((_a = images === null || images === void 0 ? void 0 : images[0]) === null || _a === void 0 ? void 0 : _a.url) || null,
                         });
                     })
                     : null,
@@ -90,10 +84,10 @@ exports.default = (plugin) => {
     };
     plugin.controllers.user.findOne = async (ctx) => {
         var _a, _b, _c, _d, _e, _f, _g;
-        ctx.query = { ...ctx.query, populate: "deep,3" };
+        ctx.query = { ...ctx.query, populate: "deep,4" };
         if (ctx.params.id == ((_a = ctx.state.user) === null || _a === void 0 ? void 0 : _a.id)) {
             const response = await strapi.entityService.findOne("plugin::users-permissions.user", ctx.params.id, {
-                populate: "deep,3",
+                populate: "deep,4",
             });
             const { id, username, email, confirmed, blocked, createdAt, updatedAt, firstName, lastName, phone, role, comments, avatar, booking, delivery, history, } = response;
             const user = {
@@ -131,9 +125,7 @@ exports.default = (plugin) => {
                             rating: booking.book.rating,
                             issueYear: booking.book.issueYear,
                             authors: booking.book.authors,
-                            image: ((_c = (_b = booking.book.images) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.map(({ attributes }) => ({
-                                url: attributes.url,
-                            }))[0]) || null,
+                            image: ((_c = (_b = booking.book.images) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.url) || null,
                         }
                         : null,
                 },
@@ -149,23 +141,24 @@ exports.default = (plugin) => {
                             rating: delivery.book.rating,
                             issueYear: delivery.book.issueYear,
                             authors: delivery.book.authors,
-                            image: ((_e = (_d = delivery.book.images) === null || _d === void 0 ? void 0 : _d.data) === null || _e === void 0 ? void 0 : _e.map(({ attributes }) => ({
-                                url: attributes.url,
-                            }))[0]) || null,
+                            image: ((_e = (_d = delivery.book.images) === null || _d === void 0 ? void 0 : _d[0]) === null || _e === void 0 ? void 0 : _e.url) || null,
                         }
                         : null,
                 },
                 history: {
                     id: (history === null || history === void 0 ? void 0 : history.id) || null,
                     books: ((_f = history === null || history === void 0 ? void 0 : history.books) === null || _f === void 0 ? void 0 : _f.length)
-                        ? history.books.map(({ id, title, rating, issueYear, authors, images }) => ({
-                            id,
-                            title,
-                            rating,
-                            issueYear,
-                            authors,
-                            image: (images === null || images === void 0 ? void 0 : images.map(({ url }) => url)[0]) || null,
-                        }))
+                        ? history.books.map(({ id, title, rating, issueYear, authors, images }) => {
+                            var _a;
+                            return ({
+                                id,
+                                title,
+                                rating,
+                                issueYear,
+                                authors,
+                                image: ((_a = images === null || images === void 0 ? void 0 : images[0]) === null || _a === void 0 ? void 0 : _a.url) || null,
+                            });
+                        })
                         : null,
                 },
             };

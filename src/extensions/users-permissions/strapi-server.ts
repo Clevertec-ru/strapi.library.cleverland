@@ -62,10 +62,7 @@ export default (plugin) => {
               rating: booking.book.rating,
               issueYear: booking.book.issueYear,
               authors: booking.book.authors,
-              image:
-                booking.book.images?.data?.map(({ attributes }) => ({
-                  url: attributes.url,
-                }))[0] || null,
+              image: booking.book.images?.[0]?.url || null,
             }
           : null,
       },
@@ -81,10 +78,7 @@ export default (plugin) => {
               rating: delivery.book.rating,
               issueYear: delivery.book.issueYear,
               authors: delivery.book.authors,
-              image:
-                delivery.book.images?.data?.map(({ attributes }) => ({
-                  url: attributes.url,
-                }))[0] || null,
+              image: delivery.book.images?.[0]?.url || null,
             }
           : null,
       },
@@ -98,10 +92,7 @@ export default (plugin) => {
                 rating,
                 issueYear,
                 authors,
-                image:
-                  images?.data?.map(({ attributes }) => ({
-                    url: attributes.url,
-                  }))[0] || null,
+                image: images?.[0]?.url || null,
               })
             )
           : null,
@@ -174,10 +165,7 @@ export default (plugin) => {
                 rating: booking.book.rating,
                 issueYear: booking.book.issueYear,
                 authors: booking.book.authors,
-                image:
-                  booking.book.images?.data?.map(({ attributes }) => ({
-                    url: attributes.url,
-                  }))[0] || null,
+                image: booking.book.images?.[0]?.url || null,
               }
             : null,
         },
@@ -193,10 +181,7 @@ export default (plugin) => {
                 rating: delivery.book.rating,
                 issueYear: delivery.book.issueYear,
                 authors: delivery.book.authors,
-                image:
-                  delivery.book.images?.data?.map(({ attributes }) => ({
-                    url: attributes.url,
-                  }))[0] || null,
+                image: delivery.book.images?.[0]?.url || null,
               }
             : null,
         },
@@ -210,7 +195,7 @@ export default (plugin) => {
                   rating,
                   issueYear,
                   authors,
-                  image: images?.map(({ url }) => url)[0] || null,
+                  image: images?.[0]?.url || null,
                 })
               )
             : null,
