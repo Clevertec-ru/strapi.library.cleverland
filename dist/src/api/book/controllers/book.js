@@ -1,17 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const strapi_1 = require("@strapi/strapi");
-const getRating = (comments) => {
-    var _a;
-    return (comments === null || comments === void 0 ? void 0 : comments.data.length)
-        ? Math.round((((_a = comments.data) === null || _a === void 0 ? void 0 : _a.reduce((acc, { attributes: { rating } }) => {
-            acc = acc + rating;
-            return acc;
-        }, 0)) /
-            comments.data.length) *
-            100) / 100
-        : null;
-};
+const get_raiting_1 = require("../../../utils/get-raiting");
 exports.default = strapi_1.factories.createCoreController("api::book.book", ({ strapi }) => ({
     async find(ctx) {
         ctx.query = { ...ctx.query, populate: "deep,3" };
@@ -20,7 +10,7 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
             var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
             return ({
                 issueYear,
-                rating: getRating(comments),
+                rating: (0, get_raiting_1.getRating)(comments),
                 title,
                 authors,
                 image: ((_a = images.data) === null || _a === void 0 ? void 0 : _a.map(({ attributes }) => ({
@@ -77,7 +67,7 @@ exports.default = strapi_1.factories.createCoreController("api::book.book", ({ s
         const book = {
             id,
             title,
-            rating: getRating(comments),
+            rating: (0, get_raiting_1.getRating)(comments),
             issueYear,
             description,
             publish,

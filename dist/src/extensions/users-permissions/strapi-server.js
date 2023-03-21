@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const get_raiting_1 = require("../../utils/get-raiting");
 exports.default = (plugin) => {
     plugin.controllers.user.me = async (ctx) => {
         var _a, _b, _c, _d, _e;
@@ -40,7 +41,7 @@ exports.default = (plugin) => {
                     ? {
                         id: booking.book.id,
                         title: booking.book.title,
-                        rating: booking.book.rating,
+                        rating: (0, get_raiting_1.getRatingUser)(booking.book.comments),
                         issueYear: booking.book.issueYear,
                         authors: booking.book.authors,
                         image: ((_b = (_a = booking.book.images) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.url) || null,
@@ -56,7 +57,7 @@ exports.default = (plugin) => {
                     ? {
                         id: delivery.book.id,
                         title: delivery.book.title,
-                        rating: delivery.book.rating,
+                        rating: (0, get_raiting_1.getRatingUser)(delivery.book.comments),
                         issueYear: delivery.book.issueYear,
                         authors: delivery.book.authors,
                         image: ((_d = (_c = delivery.book.images) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.url) || null,
@@ -66,12 +67,12 @@ exports.default = (plugin) => {
             history: {
                 id: (history === null || history === void 0 ? void 0 : history.id) || null,
                 books: ((_e = history === null || history === void 0 ? void 0 : history.books) === null || _e === void 0 ? void 0 : _e.length)
-                    ? history.books.map(({ id, title, rating, issueYear, authors, images }) => {
+                    ? history.books.map(({ id, title, comments, issueYear, authors, images }) => {
                         var _a;
                         return ({
                             id,
                             title,
-                            rating,
+                            rating: (0, get_raiting_1.getRatingUser)(comments),
                             issueYear,
                             authors,
                             image: ((_a = images === null || images === void 0 ? void 0 : images[0]) === null || _a === void 0 ? void 0 : _a.url) || null,
@@ -122,7 +123,7 @@ exports.default = (plugin) => {
                         ? {
                             id: booking.book.id,
                             title: booking.book.title,
-                            rating: booking.book.rating,
+                            rating: (0, get_raiting_1.getRatingUser)(booking.book.comments),
                             issueYear: booking.book.issueYear,
                             authors: booking.book.authors,
                             image: ((_c = (_b = booking.book.images) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.url) || null,
@@ -138,7 +139,7 @@ exports.default = (plugin) => {
                         ? {
                             id: delivery.book.id,
                             title: delivery.book.title,
-                            rating: delivery.book.rating,
+                            rating: (0, get_raiting_1.getRatingUser)(delivery.book.comments),
                             issueYear: delivery.book.issueYear,
                             authors: delivery.book.authors,
                             image: ((_e = (_d = delivery.book.images) === null || _d === void 0 ? void 0 : _d[0]) === null || _e === void 0 ? void 0 : _e.url) || null,
@@ -148,12 +149,12 @@ exports.default = (plugin) => {
                 history: {
                     id: (history === null || history === void 0 ? void 0 : history.id) || null,
                     books: ((_f = history === null || history === void 0 ? void 0 : history.books) === null || _f === void 0 ? void 0 : _f.length)
-                        ? history.books.map(({ id, title, rating, issueYear, authors, images }) => {
+                        ? history.books.map(({ id, title, comments, issueYear, authors, images }) => {
                             var _a;
                             return ({
                                 id,
                                 title,
-                                rating,
+                                rating: (0, get_raiting_1.getRatingUser)(comments),
                                 issueYear,
                                 authors,
                                 image: ((_a = images === null || images === void 0 ? void 0 : images[0]) === null || _a === void 0 ? void 0 : _a.url) || null,
@@ -209,7 +210,7 @@ exports.default = (plugin) => {
                         ? {
                             id: booking.book.id,
                             title: booking.book.title,
-                            rating: booking.book.rating,
+                            rating: (0, get_raiting_1.getRatingUser)(booking.book.comments),
                             issueYear: booking.book.issueYear,
                             authors: booking.book.authors,
                             image: ((_c = (_b = booking.book.images) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.map(({ attributes }) => ({
@@ -227,7 +228,7 @@ exports.default = (plugin) => {
                         ? {
                             id: delivery.book.id,
                             title: delivery.book.title,
-                            rating: delivery.book.rating,
+                            rating: (0, get_raiting_1.getRatingUser)(delivery.book.comments),
                             issueYear: delivery.book.issueYear,
                             authors: delivery.book.authors,
                             image: ((_e = (_d = delivery.book.images) === null || _d === void 0 ? void 0 : _d.data) === null || _e === void 0 ? void 0 : _e.map(({ attributes }) => ({
@@ -239,12 +240,12 @@ exports.default = (plugin) => {
                 history: {
                     id: (history === null || history === void 0 ? void 0 : history.id) || null,
                     books: ((_f = history === null || history === void 0 ? void 0 : history.books) === null || _f === void 0 ? void 0 : _f.length)
-                        ? history.books.map(({ id, title, rating, issueYear, authors, images }) => {
+                        ? history.books.map(({ id, title, comments, issueYear, authors, images }) => {
                             var _a;
                             return ({
                                 id,
                                 title,
-                                rating,
+                                rating: (0, get_raiting_1.getRatingUser)(comments),
                                 issueYear,
                                 authors,
                                 image: ((_a = images === null || images === void 0 ? void 0 : images.data) === null || _a === void 0 ? void 0 : _a.map(({ attributes }) => ({

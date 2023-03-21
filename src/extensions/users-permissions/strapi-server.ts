@@ -1,3 +1,5 @@
+import { getRatingUser } from "../../utils/get-raiting";
+
 export default (plugin) => {
   plugin.controllers.user.me = async (ctx) => {
     ctx.query = { ...ctx.query, populate: "deep,4" };
@@ -59,7 +61,7 @@ export default (plugin) => {
           ? {
               id: booking.book.id,
               title: booking.book.title,
-              rating: booking.book.rating,
+              rating: getRatingUser(booking.book.comments),
               issueYear: booking.book.issueYear,
               authors: booking.book.authors,
               image: booking.book.images?.[0]?.url || null,
@@ -75,7 +77,7 @@ export default (plugin) => {
           ? {
               id: delivery.book.id,
               title: delivery.book.title,
-              rating: delivery.book.rating,
+              rating: getRatingUser(delivery.book.comments),
               issueYear: delivery.book.issueYear,
               authors: delivery.book.authors,
               image: delivery.book.images?.[0]?.url || null,
@@ -86,10 +88,10 @@ export default (plugin) => {
         id: history?.id || null,
         books: history?.books?.length
           ? history.books.map(
-              ({ id, title, rating, issueYear, authors, images }) => ({
+              ({ id, title, comments, issueYear, authors, images }) => ({
                 id,
                 title,
-                rating,
+                rating: getRatingUser(comments),
                 issueYear,
                 authors,
                 image: images?.[0]?.url || null,
@@ -162,7 +164,7 @@ export default (plugin) => {
             ? {
                 id: booking.book.id,
                 title: booking.book.title,
-                rating: booking.book.rating,
+                rating: getRatingUser(booking.book.comments),
                 issueYear: booking.book.issueYear,
                 authors: booking.book.authors,
                 image: booking.book.images?.[0]?.url || null,
@@ -178,7 +180,7 @@ export default (plugin) => {
             ? {
                 id: delivery.book.id,
                 title: delivery.book.title,
-                rating: delivery.book.rating,
+                rating: getRatingUser(delivery.book.comments),
                 issueYear: delivery.book.issueYear,
                 authors: delivery.book.authors,
                 image: delivery.book.images?.[0]?.url || null,
@@ -189,10 +191,10 @@ export default (plugin) => {
           id: history?.id || null,
           books: history?.books?.length
             ? history.books.map(
-                ({ id, title, rating, issueYear, authors, images }) => ({
+                ({ id, title, comments, issueYear, authors, images }) => ({
                   id,
                   title,
-                  rating,
+                  rating: getRatingUser(comments),
                   issueYear,
                   authors,
                   image: images?.[0]?.url || null,
@@ -272,7 +274,7 @@ export default (plugin) => {
             ? {
                 id: booking.book.id,
                 title: booking.book.title,
-                rating: booking.book.rating,
+                rating: getRatingUser(booking.book.comments),
                 issueYear: booking.book.issueYear,
                 authors: booking.book.authors,
                 image:
@@ -291,7 +293,7 @@ export default (plugin) => {
             ? {
                 id: delivery.book.id,
                 title: delivery.book.title,
-                rating: delivery.book.rating,
+                rating: getRatingUser(delivery.book.comments),
                 issueYear: delivery.book.issueYear,
                 authors: delivery.book.authors,
                 image:
@@ -305,10 +307,10 @@ export default (plugin) => {
           id: history?.id || null,
           books: history?.books?.length
             ? history.books.map(
-                ({ id, title, rating, issueYear, authors, images }) => ({
+                ({ id, title, comments, issueYear, authors, images }) => ({
                   id,
                   title,
-                  rating,
+                  rating: getRatingUser(comments),
                   issueYear,
                   authors,
                   image:

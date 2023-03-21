@@ -7,19 +7,7 @@ import {
   BookDataResponseType,
   BooksDataResponseType,
 } from "../../../types/book";
-
-const getRating = (comments: any): number | null => {
-  return comments?.data.length
-    ? Math.round(
-        (comments.data?.reduce((acc: number, { attributes: { rating } }) => {
-          acc = acc + rating;
-          return acc;
-        }, 0) /
-          comments.data.length) *
-          100
-      ) / 100
-    : null;
-};
+import { getRating } from "../../../utils/get-raiting";
 
 export default factories.createCoreController(
   "api::book.book",
