@@ -121,7 +121,6 @@ exports.default = strapi_1.factories.createCoreController("api::delivery.deliver
         return data;
     },
     async continue(ctx) {
-        var _a, _b, _c, _d, _e, _f, _g;
         const delivery = await strapi
             .service("api::delivery.delivery")
             .findOne(ctx.params.id, {
@@ -129,79 +128,17 @@ exports.default = strapi_1.factories.createCoreController("api::delivery.deliver
             populate: "deep,2",
         });
         if (!delivery) {
-            return ctx.badRequest("Ошибка продления книги. Выдача не найдена по данному id", {
+            return ctx.badRequest("Ошибка продления выдачи книги. Выдача не найдена по данному id", {
                 id: ctx.params.id,
-            });
-        }
-        if (!ctx.request.body) {
-            return ctx.badRequest("Ошибка продления книги. Не передано тело запроса", {
-                body: ctx.request.body,
-            });
-        }
-        if (!ctx.request.body.data) {
-            return ctx.badRequest("Ошибка продления книги. Не переданы данные запроса", {
-                data: ctx.request.body.data,
-            });
-        }
-        if (!ctx.request.body.data.book) {
-            return ctx.badRequest("Ошибка продления книги. Не передан параметр book", {
-                book: ctx.request.body.data.book,
-            });
-        }
-        const book = await strapi
-            .service("api::book.book")
-            .findOne(ctx.request.body.data.book, {
-            ...ctx.query,
-            populate: "deep,3",
-        });
-        if (!book) {
-            return ctx.badRequest("Ошибка продления книги. Книга не найдена по данному id", {
-                book: ctx.request.body.data.book,
-            });
-        }
-        if (ctx.request.body.data.book != ((_a = delivery.book) === null || _a === void 0 ? void 0 : _a.id)) {
-            return ctx.badRequest("Ошибка изменения бронирования. Переданный параметр book не совпадает с книгой, бронирование которой изменяется", {
-                book: ctx.request.body.data.book,
-                bookId: (_b = delivery.book) === null || _b === void 0 ? void 0 : _b.id,
-            });
-        }
-        if (!book.delivery) {
-            return ctx.badRequest("Ошибка продления книги. Данная книга не выдана", {
-                book: ctx.request.body.data.book,
-                delivery: book.delivery,
-            });
-        }
-        if (!ctx.request.body.data.recipient) {
-            return ctx.badRequest("Ошибка продления книги. Не передан параметр recipient", {
-                recipient: (_d = (_c = ctx.request.body) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.recipient,
-            });
-        }
-        const recipient = await strapi.entityService.findOne("plugin::users-permissions.user", ctx.request.body.data.recipient, {
-            ...ctx.query,
-            populate: "deep,2",
-        });
-        if (!recipient) {
-            return ctx.badRequest("Ошибка продления книги. Пользователь не найден по данному id", {
-                recipient: ctx.request.body.data.recipient,
-            });
-        }
-        if (((_e = book.delivery.recipient) === null || _e === void 0 ? void 0 : _e.id) != ctx.request.body.data.recipient) {
-            return ctx.badRequest("Ошибка продления книги. Книга выдана другому пользователю", {
-                recipientId: ctx.request.body.data.recipient,
-                recipient: book.delivery.recipient,
-            });
-        }
-        if (ctx.request.body.data.recipient != ((_f = delivery.recipient) === null || _f === void 0 ? void 0 : _f.id)) {
-            return ctx.badRequest("Ошибка продления книги. Переданный параметр recipient не совпадает с пользователем, выдача которого продлевается", {
-                recipientId: ctx.request.body.data.recipient,
-                recipient: (_g = delivery.recipient) === null || _g === void 0 ? void 0 : _g.id,
             });
         }
         const tzOffset = new Date().getTimezoneOffset() * 60000;
         const startOfToday = new Date();
         startOfToday.setHours(0, 0, 0, 0);
         const defaultDateWithOffset = startOfToday.getTime() - tzOffset;
-        ctx.request.body.data.dateHandedTo = new Date(defaultDateWithOffset + 14 * 24 * 60 * 60000); // продлеваем выдачу от сегодня на 14 дней
+        ctx.request.body.data = {
+            dateHandedTo: new Date(defaultDateWithOffset + 14 * 24 * 60 * 60000),
+        }; // продлеваем выдачу от сегодня на 14 дней
         const { data } = await super.update(ctx);
         return data;
     },
