@@ -215,5 +215,150 @@ export default factories.createCoreController(
       const { data } = await super.create(ctx);
       return data;
     },
+
+    async continue(ctx) {
+      const delivery = await strapi
+        .service("api::delivery.delivery")
+        .findOne(ctx.params.id, {
+          ...ctx.query,
+          populate: "deep,2",
+        });
+      if (!delivery) {
+        return ctx.badRequest(
+          "Ошибка продления книги. Выдача не найдена по данному id",
+          {
+            id: ctx.params.id,
+          }
+        );
+      }
+
+      if (!ctx.request.body) {
+        return ctx.badRequest("Ошибка продления книги. Не передано тело запроса", {
+          body: ctx.request.body,
+        });
+      }
+
+      if (!ctx.request.body.data) {
+        return ctx.badRequest(
+          "Ошибка продления книги. Не переданы данные запроса",
+          {
+            data: ctx.request.body.data,
+          }
+        );
+      }
+
+      if (!ctx.request.body.data.book) {
+        return ctx.badRequest("Ошибка продления книги. Не передан параметр book", {
+          book: ctx.request.body.data.book,
+        });
+      }
+
+      const book = await strapi
+        .service("api::book.book")
+        .findOne(ctx.request.body.data.book, {
+          ...ctx.query,
+          populate: "deep,3",
+        });
+      if (!book) {
+        return ctx.badRequest(
+          "Ошибка продления книги. Книга не найдена по данному id",
+          {
+            book: ctx.request.body.data.book,
+          }
+        );
+      }
+
+      if (ctx.request.body.data.book != delivery.book?.id) {
+        return ctx.badRequest(
+          "Ошибка изменения бронирования. Переданный параметр book не совпадает с книгой, бронирование которой изменяется",
+          {
+            book: ctx.request.body.data.book,
+            bookId: delivery.book?.id,
+          }
+        );
+      }
+
+      if (!book.delivery) {
+        return ctx.badRequest("Ошибка продления книги. Данная книга не выдана", {
+          book: ctx.request.body.data.book,
+          delivery: book.delivery,
+        });
+      }
+
+      if (!ctx.request.body.data.recipient) {
+        return ctx.badRequest(
+          "Ошибка продления книги. Не передан параметр recipient",
+          {
+            recipient: ctx.request.body?.data?.recipient,
+          }
+        );
+      }
+
+      const recipient = await strapi.entityService.findOne(
+        "plugin::users-permissions.user",
+        ctx.request.body.data.recipient,
+        {
+          ...ctx.query,
+          populate: "deep,2",
+        }
+      );
+      if (!recipient) {
+        return ctx.badRequest(
+          "Ошибка продления книги. Пользователь не найден по данному id",
+          {
+            recipient: ctx.request.body.data.recipient,
+          }
+        );
+      }
+
+      if (book.delivery.recipient?.id != ctx.request.body.data.recipient) {
+        return ctx.badRequest(
+          "Ошибка продления книги. Книга выдана другому пользователю",
+          {
+            recipientId: ctx.request.body.data.recipient,
+            recipient: book.delivery.recipient,
+          }
+        );
+      }
+
+      if (ctx.request.body.data.recipient != delivery.recipient?.id) {
+        return ctx.badRequest(
+          "Ошибка продления книги. Переданный параметр recipient не совпадает с пользователем, выдача которого продлевается",
+          {
+            recipientId: ctx.request.body.data.recipient,
+            recipient: delivery.recipient?.id,
+          }
+        );
+      }
+
+      const tzOffset = new Date().getTimezoneOffset() * 60000;
+      const startOfToday = new Date();
+      startOfToday.setHours(0, 0, 0, 0);
+      const defaultDateWithOffset = startOfToday.getTime() - tzOffset;
+
+      ctx.request.body.data.dateHandedTo = new Date(defaultDateWithOffset + 14 * 24 * 60 * 60000 ); // продлеваем выдачу от сегодня на 14 дней
+      const { data } = await super.update(ctx);
+      return data;
+    },
+
+    async delete(ctx) {
+      const delivery = await strapi
+        .service("api::delivery.delivery")
+        .findOne(ctx.params.id, {
+          ...ctx.query,
+          populate: "deep,2",
+        });
+      if (!delivery) {
+        return ctx.badRequest(
+          "Ошибка удаления выдачи. Выдача не найдено по данному id",
+          {
+            id: ctx.params.id,
+          }
+        );
+      }
+
+      const { data } = await super.delete(ctx);
+      return data;
+    },
   })
 );
