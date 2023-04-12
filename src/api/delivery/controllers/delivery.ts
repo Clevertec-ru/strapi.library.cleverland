@@ -205,6 +205,15 @@ export default factories.createCoreController(
         );
       }
 
+      if (recipient.delivery) {
+        await strapi
+          .service("api::delivery.delivery")
+          .delete(recipient.delivery.id as never, ctx.query);
+        console.log(
+          `У пользователя есть другая выдача id=${recipient.delivery.id} и она была удалена`
+        );
+      }
+
       await strapi
         .service("api::booking.booking")
         .delete(book.booking.id as never, ctx.query);
